@@ -1,4 +1,4 @@
-package dev.algebraic.woovi;
+package br.com.openpix.sdk;
 
 public class Main {
     public static void main(String[] args) {
