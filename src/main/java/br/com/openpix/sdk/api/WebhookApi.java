@@ -31,7 +31,6 @@ import br.com.openpix.sdk.model.ApiV1AccountAccountIdGet400Response;
 import br.com.openpix.sdk.model.ApiV1WebhookGet200Response;
 import br.com.openpix.sdk.model.ApiV1WebhookIdDelete200Response;
 import br.com.openpix.sdk.model.ApiV1WebhookIdDelete400Response;
-import br.com.openpix.sdk.model.UNKNOWN_BASE_TYPE;
 import br.com.openpix.sdk.model.Webhook;
 import br.com.openpix.sdk.model.WebhookPayload;
 
@@ -343,7 +342,7 @@ public class WebhookApi {
         <tr><td> 400 </td><td> An error message </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call apiV1WebhookPostCall(UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call apiV1WebhookPostCall(WebhookPayload payload, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -357,7 +356,7 @@ public class WebhookApi {
             basePath = null;
         }
 
-        Object localVarPostBody = UNKNOWN_BASE_TYPE;
+        Object localVarPostBody = payload;
 
         // create path and map variables
         String localVarPath = "/api/v1/webhook";
@@ -389,13 +388,13 @@ public class WebhookApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call apiV1WebhookPostValidateBeforeCall(UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'UNKNOWN_BASE_TYPE' is set
-        if (UNKNOWN_BASE_TYPE == null) {
-            throw new ApiException("Missing the required parameter 'UNKNOWN_BASE_TYPE' when calling apiV1WebhookPost(Async)");
+    private okhttp3.Call apiV1WebhookPostValidateBeforeCall(WebhookPayload payload, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'payload' is set
+        if (payload == null) {
+            throw new ApiException("Missing the required parameter 'payload' when calling apiV1WebhookPost(Async)");
         }
 
-        return apiV1WebhookPostCall(UNKNOWN_BASE_TYPE, _callback);
+        return apiV1WebhookPostCall(payload, _callback);
 
     }
 
@@ -412,15 +411,15 @@ public class WebhookApi {
         <tr><td> 400 </td><td> An error message </td><td>  -  </td></tr>
      </table>
      */
-    public Object apiV1WebhookPost(UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE) throws ApiException {
-        ApiResponse<Object> localVarResp = apiV1WebhookPostWithHttpInfo(UNKNOWN_BASE_TYPE);
+    public Object apiV1WebhookPost(WebhookPayload payload) throws ApiException {
+        ApiResponse<Object> localVarResp = apiV1WebhookPostWithHttpInfo(payload);
         return localVarResp.getData();
     }
 
     /**
      * Create a new Webhook
      * Endpoint to create a new Webhook
-     * @param UNKNOWN_BASE_TYPE Data to create a new webhook (required)
+     * @param payload Data to create a new webhook (required)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -430,8 +429,8 @@ public class WebhookApi {
         <tr><td> 400 </td><td> An error message </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> apiV1WebhookPostWithHttpInfo(UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE) throws ApiException {
-        okhttp3.Call localVarCall = apiV1WebhookPostValidateBeforeCall(UNKNOWN_BASE_TYPE, null);
+    public ApiResponse<Object> apiV1WebhookPostWithHttpInfo(WebhookPayload payload) throws ApiException {
+        okhttp3.Call localVarCall = apiV1WebhookPostValidateBeforeCall(payload, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -439,7 +438,7 @@ public class WebhookApi {
     /**
      * Create a new Webhook (asynchronously)
      * Endpoint to create a new Webhook
-     * @param UNKNOWN_BASE_TYPE Data to create a new webhook (required)
+     * @param payload Data to create a new webhook (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -450,9 +449,9 @@ public class WebhookApi {
         <tr><td> 400 </td><td> An error message </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call apiV1WebhookPostAsync(UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call apiV1WebhookPostAsync(WebhookPayload payload, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = apiV1WebhookPostValidateBeforeCall(UNKNOWN_BASE_TYPE, _callback);
+        okhttp3.Call localVarCall = apiV1WebhookPostValidateBeforeCall(payload, _callback);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

@@ -18,7 +18,6 @@ import br.com.openpix.sdk.model.ApiV1AccountAccountIdGet400Response;
 import br.com.openpix.sdk.model.ApiV1WebhookGet200Response;
 import br.com.openpix.sdk.model.ApiV1WebhookIdDelete200Response;
 import br.com.openpix.sdk.model.ApiV1WebhookIdDelete400Response;
-import br.com.openpix.sdk.model.UNKNOWN_BASE_TYPE;
 import br.com.openpix.sdk.model.Webhook;
 import br.com.openpix.sdk.model.WebhookPayload;
 import org.junit.jupiter.api.Disabled;
@@ -72,8 +71,8 @@ public class WebhookApiTest {
      */
     @Test
     public void apiV1WebhookPostTest() throws ApiException {
-        UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE = null;
-        Object response = api.apiV1WebhookPost(UNKNOWN_BASE_TYPE);
+        WebhookPayload payload = null;
+        Object response = api.apiV1WebhookPost(payload);
         // TODO: test validations
     }
 
