@@ -2,7 +2,7 @@ plugins {
   id("java")
 }
 
-group = "dev.algebraic"
+group = "br.com.openpix"
 version = "1.0-SNAPSHOT"
 
 repositories {
