@@ -13,27 +13,27 @@
 
 package br.com.openpix.sdk.api;
 
+import br.com.openpix.sdk.ApiClient;
 import br.com.openpix.sdk.ApiException;
-import br.com.openpix.sdk.model.ApiV1AccountAccountIdGet400Response;
+import br.com.openpix.sdk.Configuration;
+import br.com.openpix.sdk.auth.ApiKeyAuth;
 import br.com.openpix.sdk.model.ApiV1CustomerGet200Response;
 import br.com.openpix.sdk.model.ApiV1CustomerIdGet200Response;
 import br.com.openpix.sdk.model.ApiV1CustomerPost200Response;
 import br.com.openpix.sdk.model.CustomerPayload;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * API tests for CustomerApi
  */
-@Disabled
 public class CustomerApiTest {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    private final CustomerApi api = new CustomerApi(defaultClient);
 
-    private final CustomerApi api = new CustomerApi();
+    CustomerApiTest() {
+        ApiKeyAuth appId = (ApiKeyAuth) defaultClient.getAuthentication("AppID");
+        appId.setApiKey(System.getenv("APP_ID"));
+    }
 
     /**
      * Get a list of customers
