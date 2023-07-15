@@ -2,6 +2,46 @@
 
 Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi REST API, allowing you to easily integrate Woovi's video upload and management services into your Java applications.
 
+## Docs
+
+How do I use it? You can have a look in the following example:
+
+```java,no
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+defaultClient.setBasePath("https://api.woovi.com");
+
+// Configure API key authorization: AppID
+ApiKeyAuth AppID = (ApiKeyAuth) defaultClient.getAuthentication("AppID");
+AppID.setApiKey(System.getenv("APP_ID"));
+
+AccountApi apiInstance = new AccountApi(defaultClient);
+try {
+    ApiV1AccountGet200Response result = apiInstance.apiV1AccountGet();
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling AccountApi#apiV1AccountAccountIdGet");
+    System.err.println("Status code: " + e.getCode());
+    System.err.println("Reason: " + e.getResponseBody());
+    System.err.println("Response headers: " + e.getResponseHeaders());
+    e.printStackTrace();
+}
+```
+
+Or you can read the following documentation that references the api instances:
+
+- [Account](docs/AccountApi.md)
+- [Cashback Fidelity](docs/CashbackFidelityApi.md)
+- [Charge](docs/Charge.md)
+- [Charge Refund](docs/ChargeRefundApi.md)
+- [Customer](docs/CustomerApi.md)
+- [Partner Request Access](docs/PartnerRequestAccessApi.md)
+- [Payment Request Access](docs/PaymentRequestAccessApi.md)
+- [Pix QR Code](docs/PixQrCodeApi.md)
+- [Refund](docs/RefundApi.md)
+- [Subscription](docs/SubscriptionApi.md)
+- [Transaction](docs/TransactionsApi.md)
+- [Webhook](docs/WebhookApi.md)
+
 ## Publishing to Maven Local
 
 Publishing to maven local, is a step to make the projects accessible from another projects. To make it you can execute
