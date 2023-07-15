@@ -17,6 +17,22 @@ or if you are in a Windows environment, you can do the following
 .\gradlew.bat publishToMavenLocal
 ```
 
+## Adding to you project
+
+You can use the locally published library for that, so follow the [tutorial](#publishing-to-maven-local), and add the following
+code snippet to you gradle buildscript:
+```groovy
+
+repositories {
+  mavenLocal()
+}
+
+dependencies {
+  implementation('br.com.openpix:sdk-woovi-java:1.0.0')
+}
+
+```
+
 ## Contributing
 
 We welcome contributions to the Woovi Java SDK! If you would like to contribute, please follow these steps:
