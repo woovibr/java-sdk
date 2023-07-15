@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'com.diffplug.spotless'
 
-group = 'org.openapitools'
+group = 'br.com.openpix'
 version = '1.0.0'
 
 buildscript {
