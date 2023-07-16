@@ -2,6 +2,37 @@
 
 Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi REST API, allowing you to easily integrate Woovi's video upload and management services into your Java applications.
 
+## Publishing to Maven Local
+
+Publishing to maven local, is a step to make the projects accessible from another projects. To make it you can execute
+the following commands in the cli:
+
+```bash
+$ ./gradlew publishToMavenLocal
+```
+
+or if you are in a Windows environment, you can do the following
+
+```pwsh
+.\gradlew.bat publishToMavenLocal
+```
+
+## Adding to you project
+
+You can use the locally published library for that, so follow the [tutorial](#publishing-to-maven-local), and add the following
+code snippet to you gradle buildscript:
+```groovy
+
+repositories {
+  mavenLocal()
+}
+
+dependencies {
+  implementation('br.com.openpix:sdk-woovi-java:1.0.0')
+}
+
+```
+
 ## Contributing
 
 We welcome contributions to the Woovi Java SDK! If you would like to contribute, please follow these steps:
