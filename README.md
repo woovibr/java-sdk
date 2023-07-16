@@ -7,6 +7,13 @@ Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi 
 How do I use it? You can have a look in the following example:
 
 ```java,no
+import br.com.openpix.sdk.ApiClient;
+import br.com.openpix.sdk.ApiException;
+import br.com.openpix.sdk.Configuration;
+import br.com.openpix.sdk.api.AccountApi;
+import br.com.openpix.sdk.auth.ApiKeyAuth;
+import br.com.openpix.sdk.model.ApiV1AccountGet200Response;
+
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 defaultClient.setBasePath("https://api.woovi.com");
 
