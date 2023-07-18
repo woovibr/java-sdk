@@ -1,5 +1,10 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-  id("java")
+  kotlin("jvm") version "1.8.21"
+  kotlin("plugin.serialization") version "1.8.21"
+  id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+  id("io.gitlab.arturbosch.detekt") version "1.19.0"
 }
 
 group = "br.com.openpix"
@@ -10,15 +15,44 @@ repositories {
 }
 
 dependencies {
-  implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
-
-  implementation("com.squareup.okhttp3:okhttp")
-  implementation("com.squareup.okhttp3:logging-interceptor")
-
-  testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
+  implementation("io.ktor:ktor-client-core:2.3.2")
+  implementation("io.ktor:ktor-client-cio:2.3.2")
+  implementation("io.ktor:ktor-client-logging:2.3.2")
+  implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
+  implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
+  implementation("io.ktor:ktor-client-cio-jvm:2.3.2")
+  implementation("io.ktor:ktor-client-auth:2.3.2")
 
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+ktlint {
+  version.set("0.45.2")
+  android.set(false)
+  additionalEditorconfigFile.set(rootProject.file(".editorconfig"))
+}
+
+detekt {
+  buildUponDefaultConfig = true
+  allRules = false
+
+  config = files("${rootProject.projectDir}/config/detekt.yml")
+  baseline = file("${rootProject.projectDir}/config/baseline.xml")
+}
+
+kotlin {
+  jvmToolchain(8)
+  explicitApi()
+
+  sourceSets {
+    all {
+      languageSettings {
+        optIn("kotlin.RequiresOptIn")
+        optIn("kotlin.contracts.ExperimentalContracts")
+      }
+    }
+  }
 }
 
 tasks.test {
