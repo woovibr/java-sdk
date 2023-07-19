@@ -3,7 +3,6 @@ package br.com.openpix.sdk
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
 
 @Serializable
 public data class PixQrCodeRequestBody(
@@ -40,20 +39,14 @@ public data class PixQrCode(
 )
 
 public class PixQrCodeBuilder internal constructor() {
-  public var name: String? = null
-  public var correlationID: String? = null
-  public var value: Int? = null
-  public var comment: String? = null
-  public var identifier: String? = null
+  public var name: String by Properties.required()
+  public var correlationID: String? by Properties.nullable()
+  public var value: Int? by Properties.nullable()
+  public var comment: String? by Properties.nullable()
+  public var identifier: String by Properties.required()
 
   internal fun build(): PixQrCodeRequestBody {
-    return PixQrCodeRequestBody(
-      name!!,
-      correlationID,
-      value,
-      comment,
-      identifier!!,
-    )
+    return PixQrCodeRequestBody(name, correlationID, value, comment, identifier)
   }
 }
 
