@@ -30,7 +30,7 @@ public data class ChargeResponse(
 )
 
 @Serializable
-public data class ChargeBody(
+public data class ChargeRequestBody(
   public val correlationID: String,
   public val value: Int,
   public val comment: String? = null,
@@ -72,8 +72,8 @@ public class ChargeBuilder internal constructor() {
   public var customer: Customer? = null
   public var additionalInfo: List<AdditionalInfo>? = null
 
-  internal fun build(): ChargeBody {
-    return ChargeBody(
+  internal fun build(): ChargeRequestBody {
+    return ChargeRequestBody(
       correlationID!!,
       value!!,
       comment,
@@ -83,8 +83,28 @@ public class ChargeBuilder internal constructor() {
   }
 }
 
-public suspend fun WooviSdk.createCharge(builder: ChargeBuilder.() -> Unit): JsonObject {
+public suspend fun WooviSDK.deleteCharge(id: String): JsonObject {
+  return client.delete("/api/v1/charge/${id}").body<JsonObject>()
+}
+
+//public suspend fun WooviSDK.getChargeList(id: String): Account {
+//  return client.get("/api/v1/charge?start=${start}&end=${end}&status=${status}").body<Account>()
+//}
+
+public suspend fun WooviSDK.getCharge(id: String): JsonObject {
+  return client.get("/api/v1/charge/${id}").body<JsonObject>()
+}
+
+public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): JsonObject {
   return client
-    .post("api/v1/charge") { setBody(ChargeBuilder().apply(builder).build()) }
+    .post("/api/v1/charge") { setBody(ChargeBuilder().apply(builder).build()) }
     .body<JsonObject>()
 }
+
+//public suspend fun WooviSDK.getQrCodeImageFromCharge(id: String, size: String? = null): JsonObject {
+//  if (!size.toBoolean()) {
+//    return client.get("/openpix/charge/brcode/image/${id}.png?size=1024")
+//  }
+//
+//  return client.get("/openpix/charge/brcode/image/${id}.png?size=${size}")
+//}

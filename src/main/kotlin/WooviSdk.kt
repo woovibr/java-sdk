@@ -13,18 +13,25 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 public suspend fun main() {
-  val sdk = WooviSdk(appId = System.getenv("APP_ID"))
+  val sdk = WooviSDK(appId = System.getenv("APP_ID"))
   println(
-    sdk.createCharge {
-      value = 10000
-      comment = " "
-      correlationID = "okghdaskjflg"
-    },
+    sdk.createPixQrCode{
+      name = "samuel qrcode kt"
+      identifier = "samuel1qrcode1kt"
+    }
   )
+
+//  println(
+//    sdk.createCharge {
+//      value = 10000
+//      comment = " "
+//      correlationID = "dd09adja0dja0uauhdaiudhuaihdiauhudaiu123"
+//    },
+//  )
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-public class WooviSdk constructor(
+public class WooviSDK constructor(
   private val appId: String,
   public val client: HttpClient = HttpClient(CIO) {
     install(Logging) {
@@ -41,7 +48,7 @@ public class WooviSdk constructor(
     }
 
     defaultRequest {
-      url("https://api.woovi.com/")
+      url("https://api.openpix.com.br/")
       header("Content-Type", "application/json")
       header("Authorization", appId)
     }

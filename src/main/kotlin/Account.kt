@@ -21,10 +21,10 @@ public data class Account(
 @Serializable
 public data class AccountList(public val accounts: List<Account>) : List<Account> by accounts
 
-public suspend fun WooviSdk.accountById(id: String): Account {
-  return client.get("api/v1/account/{$id}").body<Account>()
+public suspend fun WooviSDK.getAccount(id: String): Account {
+  return client.get("/api/v1/account/{$id}").body<Account>()
 }
 
-public suspend fun WooviSdk.allAccounts(): AccountList {
-  return client.get("api/v1/account").body<AccountList>()
+public suspend fun WooviSDK.allAccounts(): AccountList {
+  return client.get("/api/v1/account").body<AccountList>()
 }
