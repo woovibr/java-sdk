@@ -16,7 +16,7 @@ import kotlinx.serialization.json.Json
 
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.chargeQrCodeImage("gksdahlkg"))
+  println(sdk.withdraw("623a1c335e7d09ad83ef4a3e", 1000))
 }
 
 @OptIn(ExperimentalSerializationApi::class)

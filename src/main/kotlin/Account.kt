@@ -19,6 +19,28 @@ public data class Account(
 )
 
 @Serializable
+public data class WithdrawRequest(
+  public val value: Int,
+)
+
+@Serializable
+public data class WithdrawResponse(
+  public val withdraw: Withdraw,
+)
+
+@Serializable
+public data class Withdraw(
+  public val account: Account,
+  public val transaction: WithdrawTransaction,
+)
+
+@Serializable
+public data class WithdrawTransaction(
+  public val endToEndId: String,
+  public val value: Int,
+)
+
+@Serializable
 public data class AccountList(public val accounts: List<Account>) : List<Account> by accounts
 
 public suspend fun WooviSDK.getAccount(id: String): Account {
@@ -27,4 +49,10 @@ public suspend fun WooviSDK.getAccount(id: String): Account {
 
 public suspend fun WooviSDK.allAccounts(): AccountList {
   return client.get("/api/v1/account").body<AccountList>()
+}
+
+public suspend fun WooviSDK.withdraw(id: String, value: Int): WithdrawResponse {
+  return client
+    .post("/api/v1/account/$id/withdraw") { setBody(WithdrawRequest(value)) }
+    .body<WithdrawResponse>()
 }
