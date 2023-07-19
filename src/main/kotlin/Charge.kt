@@ -2,12 +2,12 @@ package br.com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonObject
 
 @Serializable
-public data class Charge (
+public data class Charge(
   public val customer: Customer? = null,
   public val value: Long,
   public val identifier: String,
@@ -15,11 +15,11 @@ public data class Charge (
   public val paymentLinkID: String,
   public val transactionID: String,
   public val status: String,
-  public val additionalInfo: JsonArray,
+  public val additionalInfo: List<AdditionalInfo>,
   public val discount: Long,
   public val valueWithDiscount: Long,
   public val expiresDate: String,
-  public val type: String,
+  public val type: String? = null,
   public val createdAt: String,
   public val updatedAt: String,
   public val brCode: String,
@@ -31,10 +31,23 @@ public data class Charge (
 )
 
 @Serializable
+public enum class ChargeStatus {
+  ACTIVE,
+  COMPLETED,
+  EXPIRED,
+}
+
+@Serializable
 public data class ChargeResponse(
   public val correlationID: String? = null,
   public val brCode: String? = null,
   public val charge: Charge,
+)
+
+@Serializable
+public data class ChargeListResponse(
+  public val charges: List<Charge>,
+  public val pageInfo: PageInfo,
 )
 
 @Serializable
@@ -48,7 +61,12 @@ public data class ChargeRequestBody(
   public val correlationID: String,
   public val value: Int,
   public val comment: String? = null,
-  public val customer: Customer? = null,
+  public val customer: CustomerRequest? = null,
+  public val expiresIn: Int? = null,
+  public val daysForOverdue: Int? = null,
+  public val daysAfterDueDate: Int? = null,
+  public val interests: Interests? = null,
+  public val fines: Fines? = null,
   public val additionalInfos: List<AdditionalInfo>? = null,
 )
 
@@ -60,10 +78,21 @@ public data class AdditionalInfo(
 
 @Serializable
 public data class Customer(
-  public val name: String,
+  public val name: String? = null,
+  public val taxID: TaxID? = null,
+  public val email: String? = null,
+  public val phone: String? = null,
+  public val correlationID: String? = null,
+  public val address: Address? = null,
+)
+
+@Serializable
+public data class CustomerRequest(
+  public val name: String? = null,
   public val taxID: String? = null,
-  public val email: String,
-  public val phone: String,
+  public val email: String? = null,
+  public val phone: String? = null,
+  public val correlationID: String? = null,
   public val address: Address? = null,
 )
 
@@ -79,15 +108,37 @@ public data class Address(
   public val country: String,
 )
 
+@Serializable
+public data class Interests(public val value: Int)
+
+@Serializable
+public data class Fines(public val value: Int)
+
 public class ChargeBuilder internal constructor() {
   public var correlationID: String by Properties.required()
   public var value: Int by Properties.required()
   public var comment: String? by Properties.nullable()
-  public var customer: Customer? by Properties.nullable()
+  public var customer: CustomerRequest? by Properties.nullable()
+  public var expiresIn: Int? by Properties.nullable()
+  public var daysForOverdue: Int? by Properties.nullable()
+  public var daysAfterDueDate: Int? by Properties.nullable()
+  public var interests: Interests? by Properties.nullable()
+  public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
 
   internal fun build(): ChargeRequestBody {
-    return ChargeRequestBody(correlationID, value, comment, customer, additionalInfo)
+    return ChargeRequestBody(
+      correlationID,
+      value,
+      comment,
+      customer,
+      expiresIn,
+      daysForOverdue,
+      daysAfterDueDate,
+      interests,
+      fines,
+      additionalInfo,
+    )
   }
 }
 
@@ -97,6 +148,23 @@ public suspend fun WooviSDK.deleteCharge(id: String): ChargeDeleteResponse {
 
 public suspend fun WooviSDK.getCharge(id: String): ChargeResponse {
   return client.get("/api/v1/charge/$id").body<ChargeResponse>()
+}
+
+public suspend fun WooviSDK.charges(
+  start: String? = null,
+  end: String? = null,
+  status: ChargeStatus? = null,
+): ChargeListResponse {
+  return client
+    .get {
+      url {
+        path("/api/v1/charge")
+        start?.let { encodedParameters.append("start", it) }
+        end?.let { encodedParameters.append("end", it) }
+        status?.let { encodedParameters.append("status", it.name) }
+      }
+    }
+    .body<ChargeListResponse>()
 }
 
 public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): ChargeResponse {
