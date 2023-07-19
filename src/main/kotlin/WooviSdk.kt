@@ -18,20 +18,12 @@ public suspend fun main() {
     sdk.createPixQrCode{
       name = "samuel qrcode kt"
       identifier = "samuel1qrcode1kt"
-    }
+    },
   )
-
-//  println(
-//    sdk.createCharge {
-//      value = 10000
-//      comment = " "
-//      correlationID = "dd09adja0dja0uauhdaiudhuaihdiauhudaiu123"
-//    },
-//  )
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-public class WooviSDK constructor(
+public class WooviSDK(
   private val appId: String,
   public val client: HttpClient = HttpClient(CIO) {
     install(Logging) {

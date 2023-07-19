@@ -84,15 +84,11 @@ public class ChargeBuilder internal constructor() {
 }
 
 public suspend fun WooviSDK.deleteCharge(id: String): JsonObject {
-  return client.delete("/api/v1/charge/${id}").body<JsonObject>()
+  return client.delete("/api/v1/charge/$id").body<JsonObject>()
 }
 
-//public suspend fun WooviSDK.getChargeList(id: String): Account {
-//  return client.get("/api/v1/charge?start=${start}&end=${end}&status=${status}").body<Account>()
-//}
-
 public suspend fun WooviSDK.getCharge(id: String): JsonObject {
-  return client.get("/api/v1/charge/${id}").body<JsonObject>()
+  return client.get("/api/v1/charge/$id").body<JsonObject>()
 }
 
 public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): JsonObject {
@@ -100,11 +96,3 @@ public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): Jso
     .post("/api/v1/charge") { setBody(ChargeBuilder().apply(builder).build()) }
     .body<JsonObject>()
 }
-
-//public suspend fun WooviSDK.getQrCodeImageFromCharge(id: String, size: String? = null): JsonObject {
-//  if (!size.toBoolean()) {
-//    return client.get("/openpix/charge/brcode/image/${id}.png?size=1024")
-//  }
-//
-//  return client.get("/openpix/charge/brcode/image/${id}.png?size=${size}")
-//}

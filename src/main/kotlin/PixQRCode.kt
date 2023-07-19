@@ -5,26 +5,6 @@ import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 
-//@Serializable
-//public data class PixQRCode(
-//  public val name: String,
-//  public val value: Int,
-//  public val comment: String,
-//  public val correlationID: String,
-//  public val identifier: String,
-//  public val paymentLinkID: String,
-//  public val paymentLinkUrl: String,
-//  public val qrCodeImage: String,
-//  public val brCode: String,
-//  public val createdAt: String,
-//  public val updatedAt: String,
-//)
-//
-//@Serializable
-//public data class PixQRCodeResponse(
-//  public val pixQrCode: PixQRCode,
-//)
-
 @Serializable
 public data class PixQrCodeRequestBody(
   public val name: String,
@@ -53,11 +33,11 @@ public class PixQrCodeBuilder internal constructor() {
 }
 
 public suspend fun WooviSDK.getPixQrCode(id: String): JsonObject {
-  return client.get("/api/v1/qrcode-static/${id}").body<JsonObject>()
+  return client.get("/api/v1/qrcode-static/$id").body<JsonObject>()
 }
 
 public suspend fun WooviSDK.getPixQrCodeList(): JsonObject {
-  return client.get("/api/v1/qrcode-static/").body<JsonObject>()
+  return client.get("/api/v1/qrcode-static").body<JsonObject>()
 }
 
 public suspend fun WooviSDK.createPixQrCode(builder: PixQrCodeBuilder.() -> Unit): JsonObject {
