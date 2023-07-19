@@ -15,7 +15,16 @@ public data class PixQrCodeRequestBody(
 )
 
 @Serializable
-public data class PixQrCodeResponse(public val pixQrCode: PixQrCode)
+public data class PixQrCodeResponse(
+  public val pixQrCode: PixQrCode,
+  public val correlationID: String? = null,
+  public val brCode: String? = null,
+)
+
+@Serializable
+public data class PixQrCodeList(
+  public val pixQrCodes: List<PixQrCode> = emptyList(),
+)
 
 @Serializable
 public data class PixQrCode(
@@ -48,12 +57,12 @@ public class PixQrCodeBuilder internal constructor() {
   }
 }
 
-public suspend fun WooviSDK.getPixQrCode(id: String): JsonObject {
-  return client.get("/api/v1/qrcode-static/$id").body<JsonObject>()
+public suspend fun WooviSDK.getPixQrCode(id: String): PixQrCodeResponse {
+  return client.get("/api/v1/qrcode-static/$id").body<PixQrCodeResponse>()
 }
 
-public suspend fun WooviSDK.getPixQrCodeList(): JsonObject {
-  return client.get("/api/v1/qrcode-static").body<JsonObject>()
+public suspend fun WooviSDK.allPixQrCodes(): PixQrCodeList {
+  return client.get("/api/v1/qrcode-static").body<PixQrCodeList>()
 }
 
 public suspend fun WooviSDK.createPixQrCode(builder: PixQrCodeBuilder.() -> Unit): PixQrCodeResponse {
