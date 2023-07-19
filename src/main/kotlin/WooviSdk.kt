@@ -11,8 +11,15 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.future.future
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import kotlin.coroutines.CoroutineContext
 
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
@@ -21,8 +28,10 @@ public suspend fun main() {
 
 @OptIn(ExperimentalSerializationApi::class)
 public class WooviSDK(
+  override val coroutineContext: CoroutineContext = Executors.newCachedThreadPool().asCoroutineDispatcher(),
   private val appId: String,
-  private val json: Json = Json {
+  private val baseUrl: String = "https://api.openpix.com.br/",
+  private var json: Json = Json {
     explicitNulls = true
     ignoreUnknownKeys = true
   },
@@ -47,9 +56,81 @@ public class WooviSDK(
     }
 
     defaultRequest {
-      url("https://api.openpix.com.br/")
+      url(baseUrl)
       header("Content-Type", "application/json")
       header("Authorization", appId)
     }
   },
-)
+) : CoroutineScope {
+  public fun getPixQrCodeAsync(id: String): Future<PixQrCodeResponse> = future {
+    getPixQrCode(id)
+  }
+
+  public fun allPixQrCodesAsync(): Future<PixQrCodeList> = future {
+    allPixQrCodes()
+  }
+
+  public fun createPixQrCodeAsync(builder: PixQrCodeBuilder): Future<PixQrCodeResponse> = future {
+    createPixQrCode(builder) {}
+  }
+
+  // Java util functions
+
+  public fun configureLenientJson(value: Boolean = true): WooviSDK = apply {
+    json = Json(json) {
+      isLenient = value
+    }
+  }
+
+  public fun configureAllowStructuredMapKeysJson(value: Boolean = true): WooviSDK = apply {
+    json = Json(json) {
+      allowStructuredMapKeys = value
+    }
+  }
+
+  public fun configurePrettyPrintJson(value: Boolean = true): WooviSDK = apply {
+    json = Json(json) {
+      prettyPrint = value
+    }
+  }
+
+  public fun configureExplicitNullsJson(value: Boolean = true): WooviSDK = apply {
+    json = Json(json) {
+      explicitNulls = value
+    }
+  }
+
+  public fun configureEncodeDefaultsJson(value: Boolean = true): WooviSDK = apply {
+    json = Json(json) {
+      encodeDefaults = value
+    }
+  }
+
+  public fun configureIgnoreUnknownKeysJson(value: Boolean = true): WooviSDK = apply {
+    json = Json(json) {
+      ignoreUnknownKeys = value
+    }
+  }
+
+  public companion object {
+    @JvmStatic
+    public fun of(executor: Executor, appId: String): WooviSDK {
+      return WooviSDK(executor.asCoroutineDispatcher(), appId)
+    }
+
+    @JvmStatic
+    public fun of(executor: Executor, appId: String, baseUrl: String): WooviSDK {
+      return WooviSDK(executor.asCoroutineDispatcher(), appId, baseUrl)
+    }
+
+    @JvmStatic
+    public fun of(executor: Executor, appId: String, baseUrl: String, json: Json): WooviSDK {
+      return WooviSDK(executor.asCoroutineDispatcher(), appId, baseUrl, json)
+    }
+
+    @JvmStatic
+    public fun of(executor: Executor, appId: String, json: Json, baseUrl: String, httpClient: HttpClient): WooviSDK {
+      return WooviSDK(executor.asCoroutineDispatcher(), appId, baseUrl, json, httpClient)
+    }
+  }
+}

@@ -58,8 +58,11 @@ public suspend fun WooviSDK.allPixQrCodes(): PixQrCodeList {
   return client.get("/api/v1/qrcode-static").body<PixQrCodeList>()
 }
 
-public suspend fun WooviSDK.createPixQrCode(builder: PixQrCodeBuilder.() -> Unit): PixQrCodeResponse {
+public suspend fun WooviSDK.createPixQrCode(
+  value: PixQrCodeBuilder = PixQrCodeBuilder(),
+  builder: PixQrCodeBuilder.() -> Unit,
+): PixQrCodeResponse {
   return client
-    .post("/api/v1/qrcode-static/") { setBody(PixQrCodeBuilder().apply(builder).build()) }
+    .post("/api/v1/qrcode-static/") { setBody(value.apply(builder).build()) }
     .body<PixQrCodeResponse>()
 }
