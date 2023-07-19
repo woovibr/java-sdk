@@ -2,9 +2,12 @@ package br.com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.util.cio.*
+import io.ktor.utils.io.*
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonArray
+import java.io.File
 
 @Serializable
 public data class Charge(
@@ -171,4 +174,15 @@ public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): Cha
   return client
     .post("/api/v1/charge") { setBody(ChargeBuilder().apply(builder).build()) }
     .body<ChargeResponse>()
+}
+
+public suspend fun WooviSDK.chargeQrCodeImage(id: String, size: Int = 768): File {
+  require(size >= 600) { "The qr code size should be greater than 600" }
+  require(size <= 4096) { "The qr code size should be less than 4096" }
+
+  val file = File("$id.png")
+  client.get("/openpix/charge/brcode/image/$id.png?size=$size")
+    .bodyAsChannel()
+    .copyAndClose(file.writeChannel())
+  return file
 }
