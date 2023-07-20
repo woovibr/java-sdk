@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   kotlin("jvm") version "1.8.21"
   kotlin("plugin.serialization") version "1.8.21"
@@ -44,7 +42,7 @@ detekt {
 }
 
 kotlin {
-  jvmToolchain(11)
+  jvmToolchain(8)
   explicitApi()
 
   sourceSets {

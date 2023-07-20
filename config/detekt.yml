@@ -94,19 +94,16 @@ complexity:
   active: true
   CognitiveComplexMethod:
     active: false
-    allowedComplexity: 15
   ComplexCondition:
     active: true
     threshold: 4
   ComplexInterface:
     active: false
-    allowedDefinitions: 10
     includeStaticDeclarations: false
     includePrivateDeclarations: false
     ignoreOverloaded: false
   CyclomaticComplexMethod:
     active: true
-    allowedComplexity: 14
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
@@ -125,10 +122,8 @@ complexity:
     ignoredLabels: []
   LargeClass:
     active: true
-    allowedLines: 600
   LongMethod:
     active: true
-    allowedLines: 60
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -138,17 +133,13 @@ complexity:
     ignoreAnnotatedParameter: []
   MethodOverloading:
     active: false
-    allowedOverloads: 6
   NamedArguments:
     active: false
-    allowedArguments: 3
     ignoreArgumentsMatchingNames: false
   NestedBlockDepth:
     active: true
-    allowedDepth: 4
   NestedScopeFunctions:
     active: false
-    allowedDepth: 1
     functions:
       - 'kotlin.apply'
       - 'kotlin.run'
@@ -322,12 +313,6 @@ naming:
   ForbiddenClassName:
     active: false
     forbiddenName: []
-  FunctionNameMaxLength:
-    active: false
-    maximumFunctionNameLength: 30
-  FunctionNameMinLength:
-    active: false
-    minimumFunctionNameLength: 3
   FunctionNaming:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -405,7 +390,6 @@ potential-bugs:
       - 'kotlin.String'
   CastNullableToNonNullableType:
     active: false
-    ignorePlatformTypes: true
   CastToNullableType:
     active: false
   Deprecation:
@@ -637,8 +621,6 @@ style:
     excludeImportStatements: true
     excludeCommentStatements: false
     excludeRawStrings: true
-  MayBeConstant:
-    active: true
   ModifierOrder:
     active: true
   MultilineLambdaItParameter:
@@ -687,8 +669,6 @@ style:
     active: true
   SerialVersionUIDInSerializableClass:
     active: true
-  SpacingAfterPackageDeclaration:
-    active: false
   StringShouldBeRawString:
     active: false
     maxEscapedCharacterCount: 2
