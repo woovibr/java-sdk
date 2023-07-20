@@ -2,6 +2,84 @@
 
 Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi REST API, allowing you to easily integrate Woovi's video upload and management services into your Java applications.
 
+## Docs
+
+How do I use it? You can have a look in the following example:
+
+```java,no
+import br.com.openpix.sdk.ApiClient;
+import br.com.openpix.sdk.ApiException;
+import br.com.openpix.sdk.Configuration;
+import br.com.openpix.sdk.api.AccountApi;
+import br.com.openpix.sdk.auth.ApiKeyAuth;
+import br.com.openpix.sdk.model.ApiV1AccountGet200Response;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+defaultClient.setBasePath("https://api.woovi.com");
+
+// Configure API key authorization: AppID
+ApiKeyAuth AppID = (ApiKeyAuth) defaultClient.getAuthentication("AppID");
+AppID.setApiKey(System.getenv("APP_ID"));
+
+AccountApi apiInstance = new AccountApi(defaultClient);
+try {
+    ApiV1AccountGet200Response result = apiInstance.apiV1AccountGet();
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling AccountApi#apiV1AccountAccountIdGet");
+    System.err.println("Status code: " + e.getCode());
+    System.err.println("Reason: " + e.getResponseBody());
+    System.err.println("Response headers: " + e.getResponseHeaders());
+    e.printStackTrace();
+}
+```
+
+Or you can read the following documentation that references the api instances:
+
+- [Account](docs/AccountApi.md)
+- [Cashback Fidelity](docs/CashbackFidelityApi.md)
+- [Charge](docs/Charge.md)
+- [Charge Refund](docs/ChargeRefundApi.md)
+- [Customer](docs/CustomerApi.md)
+- [Partner Request Access](docs/PartnerRequestAccessApi.md)
+- [Payment Request Access](docs/PaymentRequestAccessApi.md)
+- [Pix QR Code](docs/PixQrCodeApi.md)
+- [Refund](docs/RefundApi.md)
+- [Subscription](docs/SubscriptionApi.md)
+- [Transaction](docs/TransactionsApi.md)
+- [Webhook](docs/WebhookApi.md)
+
+## Publishing to Maven Local
+
+Publishing to maven local, is a step to make the projects accessible from another projects. To make it you can execute
+the following commands in the cli:
+
+```bash
+$ ./gradlew publishToMavenLocal
+```
+
+or if you are in a Windows environment, you can do the following
+
+```pwsh
+.\gradlew.bat publishToMavenLocal
+```
+
+## Adding to you project
+
+You can use the locally published library for that, so follow the [tutorial](#publishing-to-maven-local), and add the following
+code snippet to you gradle buildscript:
+```groovy
+
+repositories {
+  mavenLocal()
+}
+
+dependencies {
+  implementation('br.com.openpix:sdk-woovi-java:1.0.0')
+}
+
+```
+
 ## Contributing
 
 We welcome contributions to the Woovi Java SDK! If you would like to contribute, please follow these steps:
