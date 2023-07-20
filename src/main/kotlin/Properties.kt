@@ -1,6 +1,5 @@
 package br.com.openpix.sdk
 
-import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
