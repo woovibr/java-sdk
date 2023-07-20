@@ -34,6 +34,12 @@ public data class Charge(
 )
 
 @Serializable
+public enum class ChargeType {
+  DYNAMIC,
+  OVERDUE,
+}
+
+@Serializable
 public enum class ChargeStatus {
   ACTIVE,
   COMPLETED,
@@ -80,54 +86,22 @@ public data class AdditionalInfo(
 )
 
 @Serializable
-public data class Customer(
-  public val name: String? = null,
-  public val taxID: TaxID? = null,
-  public val email: String? = null,
-  public val phone: String? = null,
-  public val correlationID: String? = null,
-  public val address: Address? = null,
-)
-
-@Serializable
-public data class CustomerRequest(
-  public val name: String? = null,
-  public val taxID: String? = null,
-  public val email: String? = null,
-  public val phone: String? = null,
-  public val correlationID: String? = null,
-  public val address: Address? = null,
-)
-
-@Serializable
-public data class Address(
-  public val zipcode: String,
-  public val street: String,
-  public val number: String,
-  public val neighborhood: String,
-  public val city: String,
-  public val state: String,
-  public val complement: String,
-  public val country: String,
-)
-
-@Serializable
 public data class Interests(public val value: Int)
 
 @Serializable
 public data class Fines(public val value: Int)
 
 public class ChargeBuilder internal constructor() {
-  public var correlationID: String by Properties.required()
-  public var value: Int by Properties.required()
-  public var comment: String? by Properties.nullable()
-  public var customer: CustomerRequest? by Properties.nullable()
-  public var expiresIn: Int? by Properties.nullable()
-  public var daysForOverdue: Int? by Properties.nullable()
-  public var daysAfterDueDate: Int? by Properties.nullable()
-  public var interests: Interests? by Properties.nullable()
-  public var fines: Fines? by Properties.nullable()
-  public var additionalInfo: List<AdditionalInfo> = emptyList()
+  private var correlationID: String by Properties.required()
+  private var value: Int by Properties.required()
+  private var comment: String? by Properties.nullable()
+  private var customer: CustomerRequest? by Properties.nullable()
+  private var expiresIn: Int? by Properties.nullable()
+  private var daysForOverdue: Int? by Properties.nullable()
+  private var daysAfterDueDate: Int? by Properties.nullable()
+  private var interests: Interests? by Properties.nullable()
+  private var fines: Fines? by Properties.nullable()
+  private var additionalInfo: List<AdditionalInfo> = emptyList()
 
   internal fun build(): ChargeRequestBody {
     return ChargeRequestBody(
