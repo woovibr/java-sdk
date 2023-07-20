@@ -23,7 +23,7 @@ import kotlin.coroutines.CoroutineContext
 
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.withdraw("623a1c335e7d09ad83ef4a3e", 1000))
+  println(sdk.getSubscription("UGF5bWVudFN1YnNjcmlwdGlvbjo2NGI3ZDMzNmM2YzE3ZGE2NTk4ODM1YTI="))
 }
 
 @OptIn(ExperimentalSerializationApi::class)
