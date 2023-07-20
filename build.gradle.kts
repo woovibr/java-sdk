@@ -58,19 +58,19 @@ kotlin {
   }
 }
 val sources by tasks.registering(Jar::class) {
-    archiveBaseName.set(project.name)
-    archiveClassifier.set("sources")
-    archiveVersion.set(project.version.toString())
-    from(sourceSets.main.get().allSource)
+  archiveBaseName.set(project.name)
+  archiveClassifier.set("sources")
+  archiveVersion.set(project.version.toString())
+  from(sourceSets.main.get().allSource)
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            artifact(sources.get())
-        }
+  publications {
+    create<MavenPublication>("maven") {
+      from(components["java"])
+      artifact(sources.get())
     }
+  }
 }
 
 tasks.test {
