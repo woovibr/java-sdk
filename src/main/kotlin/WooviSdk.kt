@@ -4,22 +4,20 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
-import io.ktor.client.plugins.auth.*
-import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.future.future
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
-import kotlin.coroutines.CoroutineContext
 
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
