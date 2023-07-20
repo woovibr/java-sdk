@@ -39,11 +39,11 @@ public data class PixQrCode(
 )
 
 public class PixQrCodeBuilder internal constructor() {
-  private var name: String by Properties.required()
-  private var correlationID: String? by Properties.nullable()
-  private var value: Int? by Properties.nullable()
-  private var comment: String? by Properties.nullable()
-  private var identifier: String by Properties.required()
+  public var name: String by Properties.required()
+  public var correlationID: String? by Properties.nullable()
+  public var value: Int? by Properties.nullable()
+  public var comment: String? by Properties.nullable()
+  public var identifier: String by Properties.required()
 
   internal fun build(): PixQrCodeRequestBody {
     return PixQrCodeRequestBody(name, correlationID, value, comment, identifier)

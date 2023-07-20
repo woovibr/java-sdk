@@ -25,10 +25,10 @@ public data class SubscriptionResponseBody(
 )
 
 public class SubscriptionBuilder internal constructor() {
-  private var customer: CustomerRequest by Properties.required()
-  private var value: Int by Properties.required()
-  private var dayGenerateCharge: Int? by Properties.nullable()
-  private var chargeType: ChargeType? by Properties.nullable()
+  public var customer: CustomerRequest by Properties.required()
+  public var value: Int by Properties.required()
+  public var dayGenerateCharge: Int? by Properties.nullable()
+  public var chargeType: ChargeType? by Properties.nullable()
 
   internal fun build(): SubscriptionRequestBody {
     return SubscriptionRequestBody(

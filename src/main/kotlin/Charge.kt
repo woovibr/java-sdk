@@ -92,16 +92,16 @@ public data class Interests(public val value: Int)
 public data class Fines(public val value: Int)
 
 public class ChargeBuilder internal constructor() {
-  private var correlationID: String by Properties.required()
-  private var value: Int by Properties.required()
-  private var comment: String? by Properties.nullable()
-  private var customer: CustomerRequest? by Properties.nullable()
-  private var expiresIn: Int? by Properties.nullable()
-  private var daysForOverdue: Int? by Properties.nullable()
-  private var daysAfterDueDate: Int? by Properties.nullable()
-  private var interests: Interests? by Properties.nullable()
-  private var fines: Fines? by Properties.nullable()
-  private var additionalInfo: List<AdditionalInfo> = emptyList()
+  public var correlationID: String by Properties.required()
+  public var value: Int by Properties.required()
+  public var comment: String? by Properties.nullable()
+  public var customer: CustomerRequest? by Properties.nullable()
+  public var expiresIn: Int? by Properties.nullable()
+  public var daysForOverdue: Int? by Properties.nullable()
+  public var daysAfterDueDate: Int? by Properties.nullable()
+  public var interests: Interests? by Properties.nullable()
+  public var fines: Fines? by Properties.nullable()
+  public var additionalInfo: List<AdditionalInfo> = emptyList()
 
   internal fun build(): ChargeRequestBody {
     return ChargeRequestBody(
