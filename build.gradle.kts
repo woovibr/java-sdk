@@ -4,6 +4,7 @@ plugins {
   id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
   id("io.gitlab.arturbosch.detekt") version "1.23.0"
   `maven-publish`
+  publishing
 }
 
 group = "br.com.openpix"
@@ -11,6 +12,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  mavenLocal()
 }
 
 dependencies {
@@ -54,6 +56,21 @@ kotlin {
       }
     }
   }
+}
+val sources by tasks.registering(Jar::class) {
+    archiveBaseName.set(project.name)
+    archiveClassifier.set("sources")
+    archiveVersion.set(project.version.toString())
+    from(sourceSets.main.get().allSource)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifact(sources.get())
+        }
+    }
 }
 
 tasks.test {
