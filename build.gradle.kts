@@ -16,15 +16,15 @@ repositories {
 }
 
 dependencies {
-  implementation("io.ktor:ktor-client-core:2.3.2")
-  implementation("io.ktor:ktor-client-cio:2.3.2")
-  implementation("io.ktor:ktor-client-logging:2.3.2")
-  implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
-  implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
-  implementation("io.ktor:ktor-client-cio-jvm:2.3.2")
-  implementation("io.ktor:ktor-client-auth:2.3.2")
+  api("io.ktor:ktor-client-core:2.3.2")
+  api("io.ktor:ktor-client-cio:2.3.2")
+  api("io.ktor:ktor-client-logging:2.3.2")
+  api("io.ktor:ktor-client-content-negotiation:2.3.2")
+  api("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
+  api("io.ktor:ktor-client-cio-jvm:2.3.2")
+  api("io.ktor:ktor-client-auth:2.3.2")
 
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.2")
+  api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.2")
 
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
