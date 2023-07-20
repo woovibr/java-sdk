@@ -72,6 +72,18 @@ public class WooviSDK(
     createPixQrCode(builder) {}
   }
 
+  public fun getAccountAsync(id: String): Future<Account> = future {
+    getAccount(id)
+  }
+
+  public fun allAccountsAsync(): Future<AccountListResponse> = future {
+    allAccounts()
+  }
+
+  public fun withdrawAsync(id: String, value: Int): Future<WithdrawResponse> = future {
+    withdraw(id, value)
+  }
+
   // Java util functions
 
   public fun configureLenientJson(value: Boolean = true): WooviSDK = apply {
