@@ -21,7 +21,7 @@ import kotlinx.serialization.json.Json
 
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.getSubscription("UGF5bWVudFN1YnNjcmlwdGlvbjo2NGI3ZDMzNmM2YzE3ZGE2NTk4ODM1YTI="))
+  println(sdk.allRefunds())
 }
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -70,6 +70,18 @@ public class WooviSDK(
 
   public fun createPixQrCodeAsync(builder: PixQrCodeBuilder): Future<PixQrCodeResponse> = future {
     createPixQrCode(builder) {}
+  }
+
+  public fun getRefundAsync(id: String): Future<RefundResponse> = future {
+    getRefund(id)
+  }
+
+  public fun allRefundsAsync(): Future<RefundListResponse> = future {
+    allRefunds()
+  }
+
+  public fun createRefundAsync(value: RefundBuilder): Future<RefundResponse> = future {
+    createRefund(value) {}
   }
 
   // Java util functions
