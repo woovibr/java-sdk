@@ -32,6 +32,42 @@ public class SubscriptionBuilder internal constructor() {
   public var dayGenerateCharge: Int? by Properties.nullable()
   public var chargeType: ChargeType? by Properties.nullable()
 
+  /**
+   * The customer of the subscription.
+   *
+   * @param customer The customer of the subscription.
+   */
+  public fun customer(customer: CustomerRequest): SubscriptionBuilder = apply {
+    this.customer = customer
+  }
+
+  /**
+   * The value of the subscription.
+   *
+   * @param value The value of the subscription.
+   */
+  public fun value(value: Int): SubscriptionBuilder = apply {
+    this.value = value
+  }
+
+  /**
+   * The day generate charge of the subscription.
+   *
+   * @param dayGenerateCharge The day generate charge of the subscription.
+   */
+  public fun dayGenerateCharge(dayGenerateCharge: Int): SubscriptionBuilder = apply {
+    this.dayGenerateCharge = dayGenerateCharge
+  }
+
+  /**
+   * The charge type of the subscription.
+   *
+   * @param chargeType The charge type of the subscription.
+   */
+  public fun chargeType(chargeType: ChargeType): SubscriptionBuilder = apply {
+    this.chargeType = chargeType
+  }
+
   internal fun build(): SubscriptionRequestBody {
     return SubscriptionRequestBody(
       customer,

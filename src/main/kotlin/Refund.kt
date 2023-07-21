@@ -47,6 +47,42 @@ public class RefundBuilder internal constructor() {
   public var transactionEndToEndId: String by Properties.required()
   public var comment: String? by Properties.nullable()
 
+  /**
+   * The correlation id of the refund.
+   *
+   * @param correlationID The correlation id of the refund.
+   */
+  public fun correlationID(correlationID: String): RefundBuilder = apply {
+    this.correlationID = correlationID
+  }
+
+  /**
+   * The value of the refund.
+   *
+   * @param value The value of the refund.
+   */
+  public fun value(value: Int): RefundBuilder = apply {
+    this.value = value
+  }
+
+  /**
+   * The transaction end to end id of the refund.
+   *
+   * @param transactionEndToEndId The transaction end to end id of the refund.
+   */
+  public fun transactionEndToEndId(transactionEndToEndId: String): RefundBuilder = apply {
+    this.transactionEndToEndId = transactionEndToEndId
+  }
+
+  /**
+   * The comment of the refund.
+   *
+   * @param comment The comment of the refund.
+   */
+  public fun comment(comment: String): RefundBuilder = apply {
+    this.comment = comment
+  }
+
   @JvmSynthetic
   internal fun build(): RefundRequestBody {
     return RefundRequestBody(correlationID, value, transactionEndToEndId, comment)

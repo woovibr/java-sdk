@@ -57,6 +57,60 @@ public class CustomerBuilder internal constructor() {
   public var correlationID: String? by Properties.nullable()
   public var address: Address? by Properties.nullable()
 
+  /**
+   * The customer's name.
+   *
+   * @param name The customer's name.
+   */
+  public fun name(name: String): CustomerBuilder = apply {
+    this.name = name
+  }
+
+  /**
+   * The customer's tax id.
+   *
+   * @param taxID The customer's tax id.
+   */
+  public fun taxID(taxID: String): CustomerBuilder = apply {
+    this.taxID = taxID
+  }
+
+  /**
+   * The customer's email.
+   *
+   * @param email The customer's email.
+   */
+  public fun email(email: String): CustomerBuilder = apply {
+    this.email = email
+  }
+
+  /**
+   * The customer's phone.
+   *
+   * @param phone The customer's phone.
+   */
+  public fun phone(phone: String): CustomerBuilder = apply {
+    this.phone = phone
+  }
+
+  /**
+   * The customer's correlation id.
+   *
+   * @param correlationID The customer's correlation id.
+   */
+  public fun correlationID(correlationID: String): CustomerBuilder = apply {
+    this.correlationID = correlationID
+  }
+
+  /**
+   * The customer's address.
+   *
+   * @param address The customer's address.
+   */
+  public fun address(address: Address): CustomerBuilder = apply {
+    this.address = address
+  }
+
   @JvmSynthetic
   internal fun build(): CustomerRequest {
     return CustomerRequest(name, taxID, email, phone, correlationID, address)

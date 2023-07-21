@@ -72,6 +72,51 @@ public class PaymentBuilder internal constructor() {
   public var comment: String? by Properties.nullable()
   public var sourceAccountId: String? by Properties.nullable()
 
+  /**
+   * The value of the payment in cents.
+   *
+   * @param value The value of the payment in cents.
+   */
+  public fun value(value: Int): PaymentBuilder = apply {
+    this.value = value
+  }
+
+  /**
+   * The destination of the payment.
+   *
+   * @param destinationAlias The destination of the payment.
+   */
+  public fun destinationAlias(destinationAlias: String): PaymentBuilder = apply {
+    this.destinationAlias = destinationAlias
+  }
+
+  /**
+   * The source account of the payment.
+   *
+   * @param sourceAccountId The source account of the payment.
+   */
+  public fun sourceAccountId(sourceAccountId: String): PaymentBuilder = apply {
+    this.sourceAccountId = sourceAccountId
+  }
+
+  /**
+   * The correlation id of the payment.
+   *
+   * @param correlationID The correlation id of the payment.
+   */
+  public fun correlationID(correlationID: String): PaymentBuilder = apply {
+    this.correlationID = correlationID
+  }
+
+  /**
+   * The comment of the payment.
+   *
+   * @param comment The comment of the payment.
+   */
+  public fun comment(comment: String): PaymentBuilder = apply {
+    this.comment = comment
+  }
+
   @JvmSynthetic
   internal fun build(): PaymentRequest {
     return PaymentRequest(value, destinationAlias, correlationID, comment, sourceAccountId)
