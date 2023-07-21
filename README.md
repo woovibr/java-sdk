@@ -7,47 +7,37 @@ Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi 
 How do I use it? You can have a look in the following example:
 
 ```java,no
-import br.com.openpix.sdk.ApiClient;
-import br.com.openpix.sdk.ApiException;
-import br.com.openpix.sdk.Configuration;
-import br.com.openpix.sdk.api.AccountApi;
-import br.com.openpix.sdk.auth.ApiKeyAuth;
-import br.com.openpix.sdk.model.ApiV1AccountGet200Response;
+package br.com.openpix;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-defaultClient.setBasePath("https://api.woovi.com");
+import br.com.openpix.sdk.WooviSDK;
 
-// Configure API key authorization: AppID
-ApiKeyAuth AppID = (ApiKeyAuth) defaultClient.getAuthentication("AppID");
-AppID.setApiKey(System.getenv("APP_ID"));
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 
-AccountApi apiInstance = new AccountApi(defaultClient);
-try {
-    ApiV1AccountGet200Response result = apiInstance.apiV1AccountGet();
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling AccountApi#apiV1AccountAccountIdGet");
-    System.err.println("Status code: " + e.getCode());
-    System.err.println("Reason: " + e.getResponseBody());
-    System.err.println("Response headers: " + e.getResponseHeaders());
-    e.printStackTrace();
+public class Main {
+    public static void main(String[] args) {
+        WooviSDK sdk = WooviSDK.of(Executors.newSingleThreadExecutor(), System.getenv("APP_ID"));
+
+        try {
+            System.out.println(sdk.allPixQrCodesAsync().get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 ```
 
-Or you can read the following documentation that references the api instances:
+You can use it with Kotlin too, as it is written in Kotlin:
 
-- [Account](docs/AccountApi.md)
-- [Cashback Fidelity](docs/CashbackFidelityApi.md)
-- [Charge](docs/Charge.md)
-- [Charge Refund](docs/ChargeRefundApi.md)
-- [Customer](docs/CustomerApi.md)
-- [Partner Request Access](docs/PartnerRequestAccessApi.md)
-- [Payment Request Access](docs/PaymentRequestAccessApi.md)
-- [Pix QR Code](docs/PixQrCodeApi.md)
-- [Refund](docs/RefundApi.md)
-- [Subscription](docs/SubscriptionApi.md)
-- [Transaction](docs/TransactionsApi.md)
-- [Webhook](docs/WebhookApi.md)
+```kotlin
+import br.com.openpix.sdk.WooviSDK
+import br.com.openpix.sdk.getSubscription
+
+suspend fun main() {
+  val sdk = WooviSDK(appId = System.getenv("APP_ID"))
+  println(sdk.getSubscription("id.."))
+}
+```
 
 ## Publishing to Maven Local
 
@@ -55,29 +45,28 @@ Publishing to maven local, is a step to make the projects accessible from anothe
 the following commands in the cli:
 
 ```bash
-$ ./gradlew publishToMavenLocal
+$ ./gradlew publishMavenPublicationToMavenLocal
 ```
 
 or if you are in a Windows environment, you can do the following
 
 ```pwsh
-.\gradlew.bat publishToMavenLocal
+.\gradlew.bat publishMavenPublicationToMavenLocal
 ```
 
 ## Adding to you project
 
 You can use the locally published library for that, so follow the [tutorial](#publishing-to-maven-local), and add the following
 code snippet to you gradle buildscript:
-```groovy
 
+```groovy
 repositories {
   mavenLocal()
 }
 
 dependencies {
-  implementation('br.com.openpix:sdk-woovi-java:1.0.0')
+  implementation('br.com.openpix:sdk-java:1.0-SNAPSHOT')
 }
-
 ```
 
 ## Contributing
