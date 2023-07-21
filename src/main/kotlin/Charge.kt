@@ -56,13 +56,13 @@ public sealed class CustomerOrId {
   public fun unwrapId(): String {
     return when (this) {
       is Id -> value
-      is IsCustomer -> throw IllegalStateException("Expected Id, got Customer")
+      is IsCustomer -> error("Expected Id, got Customer")
     }
   }
 
   public fun unwrapCustomer(): Customer {
     return when (this) {
-      is Id -> throw IllegalStateException("Expected Customer, got Id")
+      is Id -> error("Expected Customer, got Id")
       is IsCustomer -> value
     }
   }
