@@ -5,7 +5,7 @@ import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class SubscriptionRequestBody(
+public data class SubscriptionRequestBody @JvmOverloads public constructor(
   public val customer: CustomerRequest,
   public val value: Int,
   public val dayGenerateCharge: Int? = null,
@@ -13,7 +13,7 @@ public data class SubscriptionRequestBody(
 )
 
 @Serializable
-public data class Subscription(
+public data class Subscription @JvmOverloads public constructor(
   public val customer: CustomerRequest,
   public val value: Int,
   public val dayGenerateCharge: Int? = null,
@@ -40,10 +40,12 @@ public class SubscriptionBuilder internal constructor() {
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getSubscription(id: String): SubscriptionResponseBody {
   return client.get("/api/v1/subscriptions/$id").body<SubscriptionResponseBody>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.createSubscription(builder: SubscriptionBuilder.() -> Unit): SubscriptionResponseBody {
   return client
     .post("/api/v1/subscriptions") { setBody(SubscriptionBuilder().apply(builder).build()) }

@@ -19,6 +19,7 @@ import kotlinx.coroutines.future.future
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
+@JvmSynthetic
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
   println(sdk.allPayments())
@@ -104,6 +105,7 @@ public class WooviSDK @JvmOverloads public constructor(
     getCharge(id)
   }
 
+  @JvmOverloads
   public fun chargesAsync(
     start: String? = null,
     end: String? = null,

@@ -3,7 +3,7 @@ package br.com.openpix.sdk
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class PageInfo(
+public data class PageInfo @JvmOverloads public constructor(
   public val errors: List<PageInfoError> = emptyList(),
   public val skip: Int,
   public val limit: Int,

@@ -45,19 +45,23 @@ public class PixQrCodeBuilder internal constructor() {
   public var comment: String? by Properties.nullable()
   public var identifier: String by Properties.required()
 
+  @JvmSynthetic
   internal fun build(): PixQrCodeRequestBody {
     return PixQrCodeRequestBody(name, correlationID, value, comment, identifier)
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getPixQrCode(id: String): PixQrCodeResponse {
   return client.get("/api/v1/qrcode-static/$id").body<PixQrCodeResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.allPixQrCodes(): PixQrCodeList {
   return client.get("/api/v1/qrcode-static").body<PixQrCodeList>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.createPixQrCode(
   value: PixQrCodeBuilder = PixQrCodeBuilder(),
   builder: PixQrCodeBuilder.() -> Unit,

@@ -10,7 +10,7 @@ import java.io.File
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class Charge(
+public data class Charge @JvmOverloads public constructor(
   public val customer: Customer? = null,
   public val value: Long,
   public val identifier: String,
@@ -47,7 +47,7 @@ public enum class ChargeStatus {
 }
 
 @Serializable
-public data class ChargeResponse(
+public data class ChargeResponse @JvmOverloads public constructor(
   public val correlationID: String? = null,
   public val brCode: String? = null,
   public val charge: Charge,
@@ -66,7 +66,7 @@ public data class ChargeDeleteResponse(
 )
 
 @Serializable
-public data class ChargeRequestBody(
+public data class ChargeRequestBody @JvmOverloads public constructor(
   public val correlationID: String,
   public val value: Int,
   public val comment: String? = null,
@@ -103,6 +103,7 @@ public class ChargeBuilder internal constructor() {
   public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
 
+  @JvmSynthetic
   internal fun build(): ChargeRequestBody {
     return ChargeRequestBody(
       correlationID,
@@ -119,14 +120,17 @@ public class ChargeBuilder internal constructor() {
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.deleteCharge(id: String): ChargeDeleteResponse {
   return client.delete("/api/v1/charge/$id").body<ChargeDeleteResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getCharge(id: String): ChargeResponse {
   return client.get("/api/v1/charge/$id").body<ChargeResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.charges(
   start: String? = null,
   end: String? = null,
