@@ -26,7 +26,7 @@ public data class WebhookPayload(
 @Serializable
 public data class Webhook(
   public val id: String,
-  public val name: Int,
+  public val name: String,
   public val url: String? = null,
   public val authorization: String? = null,
   public val isActive: Boolean,
@@ -45,6 +45,12 @@ public data class WebhookRequest(public val webhook: WebhookPayload)
 
 @Serializable
 public data class WebhookResponse(public val webhook: Webhook)
+
+@Serializable
+public data class WebhookListResponse(
+  public val webhooks: List<Webhook>,
+  public val pageInfo: PageInfo,
+)
 
 @Serializable
 public enum class WebhookEvent {
@@ -242,6 +248,15 @@ public class WebhookBuilder internal constructor() {
       ),
     )
   }
+}
+
+@JvmSynthetic
+public suspend fun WooviSDK.allWebhooks(url: String? = null): WebhookListResponse {
+  return client
+    .get("/api/v1/webhook") {
+      url?.let { parameter("url", it) }
+    }
+    .body<WebhookListResponse>()
 }
 
 @JvmSynthetic
