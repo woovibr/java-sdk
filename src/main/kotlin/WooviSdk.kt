@@ -73,6 +73,18 @@ public class WooviSDK(
     createPixQrCode(builder) {}
   }
 
+  public fun getAccountAsync(id: String): Future<Account> = future {
+    getAccount(id)
+  }
+
+  public fun allAccountsAsync(): Future<AccountListResponse> = future {
+    allAccounts()
+  }
+
+  public fun withdrawAsync(id: String, value: Int): Future<WithdrawResponse> = future {
+    withdraw(id, value)
+  }
+
   public fun getPaymentAsync(id: String): Future<PaymentResponseObject> = future {
     getPayment(id)
   }

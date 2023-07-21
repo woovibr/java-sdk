@@ -41,14 +41,14 @@ public data class WithdrawTransaction(
 )
 
 @Serializable
-public data class AccountList(public val accounts: List<Account>) : List<Account> by accounts
+public data class AccountListResponse(public val accounts: List<Account>) : List<Account> by accounts
 
 public suspend fun WooviSDK.getAccount(id: String): Account {
   return client.get("/api/v1/account/{$id}").body<Account>()
 }
 
-public suspend fun WooviSDK.allAccounts(): AccountList {
-  return client.get("/api/v1/account").body<AccountList>()
+public suspend fun WooviSDK.allAccounts(): AccountListResponse {
+  return client.get("/api/v1/account").body<AccountListResponse>()
 }
 
 public suspend fun WooviSDK.withdraw(id: String, value: Int): WithdrawResponse {
