@@ -23,12 +23,6 @@ import kotlinx.coroutines.future.future
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
-@JvmSynthetic
-public suspend fun main() {
-  val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.deleteWebhook("V2ViaG9vazo2NDg3NzNjY2JlYmNjZTI0NzQ3ZmIwZGM="))
-}
-
 /**
  * The entrypoint of Woovi SDK for Java, Kotlin and another JVM Languages, it does take an authorization [appId].
  */
@@ -281,6 +275,58 @@ public class WooviSDK @JvmOverloads public constructor(
    */
   public fun createWebhookAsync(builder: WebhookBuilder): Future<WebhookResponse> = future {
     createWebhook(builder) {}
+  }
+
+  /**
+   * Returns a transaction.
+   *
+   * @param id The transaction id.
+   * @return The transaction response.
+   */
+  public fun getTransactionAsync(id: String): Future<TransactionResponse> = future {
+    getTransaction(id)
+  }
+
+  /**
+   * Returns the transactions
+   *
+   * @param start Start date used in the query. Complies with RFC 3339.
+   * @param end End date used in the query. Complies with RFC 3339.
+   * @param charge You can use the charge ID or correlation ID or transaction ID of charge to get a list
+   *  of transactions related of this transaction
+   * @param pixQrCode You can use the QrCode static ID or correlation ID or identifier field of QrCode
+   *  static to get a list of QrCode related of this transaction
+   * @param withdrawal You can use the ID or EndToEndId of a withdrawal transaction to get all transactions
+   *  related to the withdrawal
+   * @return The transaction list response.
+   */
+  @JvmOverloads
+  public fun transactionsAsync(
+    /** Start date used in the query. Complies with RFC 3339. */
+    start: String? = null,
+
+    /** End date used in the query. Complies with RFC 3339. */
+    end: String? = null,
+
+    /**
+     * You can use the charge ID or correlation ID or transaction ID of charge to get a list of transactions
+     * related of this transaction
+     */
+    charge: String? = null,
+
+    /**
+     * You can use the QrCode static ID or correlation ID or identifier field of QrCode static to get a list
+     * of QrCode related of this transaction
+     */
+    pixQrCode: String? = null,
+
+    /**
+     *You can use the ID or EndToEndId of a withdrawal transaction to get all transactions related to the
+     * withdrawal
+     */
+    withdrawal: String? = null,
+  ): Future<TransactionListResponse> = future {
+    transactions(start, end, charge, pixQrCode, withdrawal)
   }
 
   /**
