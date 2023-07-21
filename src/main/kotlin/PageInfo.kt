@@ -1,3 +1,5 @@
+@file:JvmName("PageInfos")
+
 package br.com.openpix.sdk
 
 import kotlinx.serialization.Serializable

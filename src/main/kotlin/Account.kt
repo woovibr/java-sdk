@@ -1,3 +1,5 @@
+@file:JvmName("Accounts")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.call.*

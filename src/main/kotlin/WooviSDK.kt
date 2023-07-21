@@ -1,3 +1,5 @@
+@file:JvmName("WooviSDKs")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.*
