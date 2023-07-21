@@ -41,6 +41,9 @@ public data class Webhook(
 )
 
 @Serializable
+public data class WebhookDeleteResponse(public val status: String)
+
+@Serializable
 public data class WebhookRequest(public val webhook: WebhookPayload)
 
 @Serializable
@@ -257,6 +260,11 @@ public suspend fun WooviSDK.allWebhooks(url: String? = null): WebhookListRespons
       url?.let { parameter("url", it) }
     }
     .body<WebhookListResponse>()
+}
+
+@JvmSynthetic
+public suspend fun WooviSDK.deleteWebhook(id: String): WebhookDeleteResponse {
+  return client.delete("/api/v1/webhook/$id").body<WebhookDeleteResponse>()
 }
 
 @JvmSynthetic

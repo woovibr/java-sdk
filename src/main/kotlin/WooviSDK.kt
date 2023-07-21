@@ -26,7 +26,7 @@ import kotlinx.serialization.json.Json
 @JvmSynthetic
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.allWebhooks())
+  println(sdk.deleteWebhook("V2ViaG9vazo2NDg3NzNjY2JlYmNjZTI0NzQ3ZmIwZGM="))
 }
 
 /**
@@ -250,6 +250,16 @@ public class WooviSDK @JvmOverloads public constructor(
    */
   public fun createRefundAsync(value: RefundBuilder): Future<RefundResponse> = future {
     createRefund(value) {}
+  }
+
+  /**
+   * Deletes a webhook by id.
+   *
+   * @param id The webhook id.
+   * @return The webhook delete response.
+   */
+  public fun deleteWebhookAsync(id: String): Future<WebhookDeleteResponse> = future {
+    deleteWebhook(id)
   }
 
   /**
