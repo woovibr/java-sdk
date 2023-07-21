@@ -9,6 +9,7 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import java.io.File
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -72,13 +73,37 @@ public class WooviSDK(
     createPixQrCode(builder) {}
   }
 
+  public fun deleteChargeAsync(id: String): Future<ChargeDeleteResponse> = future {
+    deleteCharge(id)
+  }
+
+  public fun getChargeAsync(id: String): Future<ChargeResponse> = future {
+    getCharge(id)
+  }
+
+  public fun chargesAsync(
+    start: String? = null,
+    end: String? = null,
+    status: ChargeStatus? = null,
+  ): Future<ChargeListResponse> = future {
+    charges(start, end, status)
+  }
+
+  public fun createChargeAsync(builder: ChargeBuilder): Future<ChargeResponse> = future {
+    createCharge(builder) {}
+  }
+
+  public fun chargeQrCodeImageAsync(id: String, size: Int = 768): Future<File> = future {
+    chargeQrCodeImage(id, size)
+  }
+
   public fun getCustomerAsync(id: String): Future<Customer> = future {
     getCustomer(id)
   }
 
   public fun allCustomersAsync(): Future<CustomerListResponse> = future {
     allCustomers()
-w  }
+  }
 
   public fun createCustomerAsync(value: CustomerBuilder): Future<CustomerResponse> = future {
     createCustomer(value) {}
