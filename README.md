@@ -12,11 +12,10 @@ package br.com.openpix;
 import br.com.openpix.sdk.WooviSDK;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
-        WooviSDK sdk = WooviSDK.of(Executors.newSingleThreadExecutor(), System.getenv("APP_ID"));
+        WooviSDK sdk = new WooviSDK(System.getenv("APP_ID"));
 
         try {
             System.out.println(sdk.allPixQrCodesAsync().get());
