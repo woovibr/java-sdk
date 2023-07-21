@@ -9,11 +9,16 @@ import io.ktor.http.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import java.io.File
+import java.util.function.Consumer
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 public data class Charge @JvmOverloads public constructor(
-  public val customer: Customer? = null,
+  public val customer: CustomerOrId? = null,
   public val value: Long,
   public val identifier: String,
   public val correlationID: String,
@@ -34,6 +39,67 @@ public data class Charge @JvmOverloads public constructor(
   public val qrCodeImage: String,
   public val globalID: String,
 )
+
+@Serializable(with = CustomerOrId.CustomerOrIdSerializer::class)
+public sealed class CustomerOrId {
+  public class Id(public val value: String) : CustomerOrId()
+  public class IsCustomer(public val value: Customer) : CustomerOrId()
+
+  public fun isId(): Boolean {
+    return this is Id
+  }
+
+  public fun isCustomer(): Boolean {
+    return this is Id
+  }
+
+  public fun unwrapId(): String {
+    return when (this) {
+      is Id -> value
+      is IsCustomer -> throw IllegalStateException("Expected Id, got Customer")
+    }
+  }
+
+  public fun unwrapCustomer(): Customer {
+    return when (this) {
+      is Id -> throw IllegalStateException("Expected Customer, got Id")
+      is IsCustomer -> value
+    }
+  }
+
+  public fun foldVoid(ifId: Consumer<String>, ifCustomer: Consumer<Customer>) {
+    return when (this) {
+      is Id -> ifId.accept(value)
+      is IsCustomer -> ifCustomer.accept(value)
+    }
+  }
+
+  public fun <T> fold(ifId: (String) -> T, ifCustomer: (Customer) -> T): T {
+    return when (this) {
+      is Id -> ifId(value)
+      is IsCustomer -> ifCustomer(value)
+    }
+  }
+
+  internal object CustomerOrIdSerializer : KSerializer<CustomerOrId> {
+    override val descriptor: SerialDescriptor = Customer.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): CustomerOrId {
+      return runCatching {
+        Id(decoder.decodeString())
+      }.getOrElse {
+        IsCustomer(decoder.decodeSerializableValue(Customer.serializer()))
+      }
+    }
+
+    override fun serialize(encoder: Encoder, value: CustomerOrId) {
+      when (value) {
+        is Id -> encoder.encodeString(value.value)
+        is IsCustomer -> encoder.encodeSerializableValue(Customer.serializer(), value.value)
+      }
+    }
+  }
+}
 
 @Serializable
 public enum class ChargeType {
