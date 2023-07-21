@@ -105,6 +105,104 @@ public class ChargeBuilder internal constructor() {
   public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
 
+  /**
+   * The correlation ID is a unique identifier for each request. It is useful for tracking a request through the system.
+   *
+   * @param correlationID The correlation ID
+   */
+  public fun correlationID(correlationID: String): ChargeBuilder = apply {
+    this.correlationID = correlationID
+  }
+
+  /**
+   * The value of the charge in cents.
+   *
+   * @param value The value of the charge in cents
+   */
+  public fun value(value: Int) {
+    this.value = value
+  }
+
+  /**
+   * The comment of the charge.
+   *
+   * @param comment The comment of the charge
+   */
+  public fun comment(comment: String) {
+    this.comment = comment
+  }
+
+  /**
+   * The customer information.
+   *
+   * @param customer The customer information
+   */
+  public fun customer(customer: CustomerBuilder): ChargeBuilder = apply {
+    this.customer = customer.build()
+  }
+
+  /**
+   * The expiration date of the charge in days.
+   *
+   * @param expiresIn The expiration date of the charge in days
+   */
+  public fun expiresIn(expiresIn: Int): ChargeBuilder = apply {
+    this.expiresIn = expiresIn
+  }
+
+  /**
+   * The days for overdue.
+   *
+   * @param daysForOverdue The days for overdue
+   */
+  public fun daysForOverdue(daysForOverdue: Int): ChargeBuilder = apply {
+    this.daysForOverdue = daysForOverdue
+  }
+
+  /**
+   * The days after due date.
+   *
+   * @param daysAfterDueDate The days after due date
+   */
+  public fun daysAfterDueDate(daysAfterDueDate: Int): ChargeBuilder = apply {
+    this.daysAfterDueDate = daysAfterDueDate
+  }
+
+  /**
+   * The interests value in cents.
+   *
+   * @param interests The interests value in cents
+   */
+  public fun interests(interests: Int): ChargeBuilder = apply {
+    this.interests = Interests(interests)
+  }
+
+  /**
+   * The fines value in cents.
+   *
+   * @param fines The fines value in cents
+   */
+  public fun fines(fines: Int): ChargeBuilder = apply {
+    this.fines = Fines(fines)
+  }
+
+  /**
+   * The interests value in cents.
+   */
+  public fun additionalInfo(additionalInfo: List<AdditionalInfo>): ChargeBuilder = apply {
+    this.additionalInfo = additionalInfo
+  }
+
+  /**
+   * Adds an info.
+   *
+   * @param key The key of the additional info
+   * @param value The value of the additional info
+   */
+  public fun additionalInfo(key: String, value: String): ChargeBuilder = apply {
+    additionalInfo = additionalInfo + AdditionalInfo(key, value)
+  }
+
   @JvmSynthetic
   internal fun build(): ChargeRequestBody {
     return ChargeRequestBody(
