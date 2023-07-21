@@ -49,6 +49,9 @@ public data class TransactionListResponse(
 )
 
 @Serializable
+public data class TransactionResponse(public val transaction: Transaction)
+
+@Serializable
 public data class PixWithdrawTransaction @JvmOverloads public constructor(
   public val value: Int? = null,
   public val time: String? = null,
@@ -66,6 +69,11 @@ public data class PixWithdrawTransaction @JvmOverloads public constructor(
   @SerialName("endToEndId")
   public val secondEndToEndId: String? = null,
 )
+
+@JvmSynthetic
+public suspend fun WooviSDK.getTransaction(id: String): TransactionResponse {
+  return client.get("/api/v1/transaction/$id").body<TransactionResponse>()
+}
 
 @JvmSynthetic
 public suspend fun WooviSDK.transactions(

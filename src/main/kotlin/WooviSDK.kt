@@ -23,12 +23,6 @@ import kotlinx.coroutines.future.future
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
-@JvmSynthetic
-public suspend fun main() {
-  val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.transactions())
-}
-
 /**
  * The entrypoint of Woovi SDK for Java, Kotlin and another JVM Languages, it does take an authorization [appId].
  */
@@ -281,6 +275,16 @@ public class WooviSDK @JvmOverloads public constructor(
    */
   public fun createWebhookAsync(builder: WebhookBuilder): Future<WebhookResponse> = future {
     createWebhook(builder) {}
+  }
+
+  /**
+   * Returns a transaction.
+   *
+   * @param id The transaction id.
+   * @return The transaction response.
+   */
+  public fun getTransactionAsync(id: String): Future<TransactionResponse> = future {
+    getTransaction(id)
   }
 
   /**
