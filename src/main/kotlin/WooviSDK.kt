@@ -26,7 +26,13 @@ import kotlinx.serialization.json.Json
 @JvmSynthetic
 public suspend fun main() {
   val sdk = WooviSDK(appId = System.getenv("APP_ID"))
-  println(sdk.allPayments())
+  val awa = sdk.createWebhook {
+    url = "https://gabx.io"
+    number = 10
+    enableWebhook()
+    onTransactionReceived()
+  }
+  println(awa)
 }
 
 /**
@@ -250,6 +256,16 @@ public class WooviSDK @JvmOverloads public constructor(
    */
   public fun createRefundAsync(value: RefundBuilder): Future<RefundResponse> = future {
     createRefund(value) {}
+  }
+
+  /**
+   * Creates a new webhook.
+   *
+   * @param builder The webhook builder.
+   * @return The webhook response.
+   */
+  public fun createWebhookAsync(builder: WebhookBuilder): Future<WebhookResponse> = future {
+    createWebhook(builder) {}
   }
 
   /**
