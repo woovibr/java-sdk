@@ -26,10 +26,10 @@ public suspend fun main() {
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-public class WooviSDK(
-  override val coroutineContext: CoroutineContext = Executors.newCachedThreadPool().asCoroutineDispatcher(),
+public class WooviSDK @JvmOverloads public constructor(
   private val appId: String,
   private val baseUrl: String = "https://api.openpix.com.br/",
+  override val coroutineContext: CoroutineContext = Executors.newCachedThreadPool().asCoroutineDispatcher(),
   private var json: Json = Json {
     explicitNulls = true
     ignoreUnknownKeys = true
@@ -93,7 +93,7 @@ public class WooviSDK(
     allPayments()
   }
 
-  public suspend fun createPaymentAsync(builder: PaymentBuilder): Future<PaymentResponseObject> = future {
+  public fun createPaymentAsync(builder: PaymentBuilder): Future<PaymentResponseObject> = future {
     createPayment(builder) {}
   }
 
@@ -180,28 +180,6 @@ public class WooviSDK(
   public fun configureIgnoreUnknownKeysJson(value: Boolean = true): WooviSDK = apply {
     json = Json(json) {
       ignoreUnknownKeys = value
-    }
-  }
-
-  public companion object {
-    @JvmStatic
-    public fun of(executor: Executor, appId: String): WooviSDK {
-      return WooviSDK(executor.asCoroutineDispatcher(), appId)
-    }
-
-    @JvmStatic
-    public fun of(executor: Executor, appId: String, baseUrl: String): WooviSDK {
-      return WooviSDK(executor.asCoroutineDispatcher(), appId, baseUrl)
-    }
-
-    @JvmStatic
-    public fun of(executor: Executor, appId: String, baseUrl: String, json: Json): WooviSDK {
-      return WooviSDK(executor.asCoroutineDispatcher(), appId, baseUrl, json)
-    }
-
-    @JvmStatic
-    public fun of(executor: Executor, appId: String, json: Json, baseUrl: String, httpClient: HttpClient): WooviSDK {
-      return WooviSDK(executor.asCoroutineDispatcher(), appId, baseUrl, json, httpClient)
     }
   }
 }
