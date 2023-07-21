@@ -1,3 +1,5 @@
+@file:JvmName("Customers")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.call.*
@@ -5,7 +7,7 @@ import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class Address(
+public data class Address @JvmOverloads public constructor(
   public val zipcode: String? = null,
   public val street: String? = null,
   public val number: String? = null,
@@ -17,7 +19,7 @@ public data class Address(
 )
 
 @Serializable
-public data class Customer(
+public data class Customer @JvmOverloads public constructor(
   public val name: String? = null,
   public val taxID: TaxID? = null,
   public val email: String? = null,
@@ -38,7 +40,7 @@ public data class CustomerListResponse(
 )
 
 @Serializable
-public data class CustomerRequest(
+public data class CustomerRequest @JvmOverloads public constructor(
   public val name: String? = null,
   public val taxID: String? = null,
   public val email: String? = null,
@@ -55,19 +57,23 @@ public class CustomerBuilder internal constructor() {
   public var correlationID: String? by Properties.nullable()
   public var address: Address? by Properties.nullable()
 
+  @JvmSynthetic
   internal fun build(): CustomerRequest {
     return CustomerRequest(name, taxID, email, phone, correlationID, address)
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getCustomer(id: String): Customer {
   return client.get("/api/v1/customer/{$id}").body<Customer>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.allCustomers(): CustomerListResponse {
   return client.get("/api/v1/customer").body<CustomerListResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.createCustomer(
   value: CustomerBuilder,
   builder: CustomerBuilder.() -> Unit,

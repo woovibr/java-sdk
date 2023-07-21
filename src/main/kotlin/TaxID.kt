@@ -1,3 +1,4 @@
+@file:JvmName("TaxIDs")
 @file:OptIn(ExperimentalSerializationApi::class)
 
 package br.com.openpix.sdk

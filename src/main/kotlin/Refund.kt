@@ -1,3 +1,5 @@
+@file:JvmName("Refunds")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.call.*
@@ -45,19 +47,23 @@ public class RefundBuilder internal constructor() {
   public var transactionEndToEndId: String by Properties.required()
   public var comment: String? by Properties.nullable()
 
+  @JvmSynthetic
   internal fun build(): RefundRequestBody {
     return RefundRequestBody(correlationID, value, transactionEndToEndId, comment)
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getRefund(id: String): RefundResponse {
   return client.get("/api/v1/refund/$id").body<RefundResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.allRefunds(): RefundListResponse {
   return client.get("/api/v1/refund").body<RefundListResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.createRefund(
   value: RefundBuilder = RefundBuilder(),
   builder: RefundBuilder.() -> Unit,

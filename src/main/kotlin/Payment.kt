@@ -1,3 +1,5 @@
+@file:JvmName("Payments")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.call.*
@@ -70,21 +72,25 @@ public class PaymentBuilder internal constructor() {
   public var comment: String? by Properties.nullable()
   public var sourceAccountId: String? by Properties.nullable()
 
-  public fun build(): PaymentRequest {
+  @JvmSynthetic
+  internal fun build(): PaymentRequest {
     return PaymentRequest(value, destinationAlias, correlationID, comment, sourceAccountId)
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getPayment(id: String): PaymentResponseObject {
   return client.get("/api/v1/payment/$id").body<PaymentResponseObject>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.allPayments(): PaymentListResponse {
   return client
     .get("/api/v1/payment")
     .body<PaymentListResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.createPayment(
   value: PaymentBuilder = PaymentBuilder(),
   builder: PaymentBuilder.() -> Unit,
