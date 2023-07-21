@@ -61,7 +61,7 @@ public suspend fun WooviSDK.allRefunds(): RefundListResponse {
 public suspend fun WooviSDK.createRefund(
   value: RefundBuilder = RefundBuilder(),
   builder: RefundBuilder.() -> Unit,
-  ): RefundResponse {
+): RefundResponse {
   return client
     .post("/api/v1/refund") { setBody(value.apply(builder).build()) }
     .body<RefundResponse>()
