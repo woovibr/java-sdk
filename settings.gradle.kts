@@ -1,1 +1,1 @@
-rootProject.name = "sdk-woovi-java"
+rootProject.name = "sdk-java"

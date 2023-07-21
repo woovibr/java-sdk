@@ -144,9 +144,12 @@ public suspend fun WooviSDK.charges(
     .body<ChargeListResponse>()
 }
 
-public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): ChargeResponse {
+public suspend fun WooviSDK.createCharge(
+  value: ChargeBuilder = ChargeBuilder(),
+  builder: ChargeBuilder.() -> Unit,
+): ChargeResponse {
   return client
-    .post("/api/v1/charge") { setBody(ChargeBuilder().apply(builder).build()) }
+    .post("/api/v1/charge") { setBody(value.apply(builder).build()) }
     .body<ChargeResponse>()
 }
 
