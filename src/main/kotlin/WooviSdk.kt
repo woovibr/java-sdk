@@ -78,10 +78,22 @@ public class WooviSDK(
 
   public fun allCustomersAsync(): Future<CustomerListResponse> = future {
     allCustomers()
-  }
+w  }
 
   public fun createCustomerAsync(value: CustomerBuilder): Future<CustomerResponse> = future {
     createCustomer(value) {}
+  }
+
+  public fun getRefundAsync(id: String): Future<RefundResponse> = future {
+    getRefund(id)
+  }
+
+  public fun allRefundsAsync(): Future<RefundListResponse> = future {
+    allRefunds()
+  }
+
+  public fun createRefundAsync(value: RefundBuilder): Future<RefundResponse> = future {
+    createRefund(value) {}
   }
 
   // Java util functions
