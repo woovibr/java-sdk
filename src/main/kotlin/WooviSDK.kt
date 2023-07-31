@@ -22,13 +22,16 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.future.future
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import org.jetbrains.annotations.TestOnly
 
 /**
  * The entrypoint of Woovi SDK for Java, Kotlin and another JVM Languages, it does take an authorization [appId].
  */
 public class WooviSDK @JvmOverloads public constructor(
   /** The authorization [appId] of your application. */
-  private val appId: String,
+  @TestOnly
+  @JvmSynthetic
+  internal val appId: String,
 
   /** The base URL of Woovi API. */
   private val baseUrl: String = "https://api.openpix.com.br/",
