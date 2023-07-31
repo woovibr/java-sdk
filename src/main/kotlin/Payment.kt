@@ -5,14 +5,16 @@ package br.com.openpix.sdk
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import kotlin.text.get
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 public data class PaymentListResponse(
   public val status: String? = null,
-  public val payments: List<PaymentResponseObject>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("payments")
+  public override var items: List<PaymentResponseObject>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<PaymentResponseObject>
 
 @Serializable
 public data class PaymentResponseObject(

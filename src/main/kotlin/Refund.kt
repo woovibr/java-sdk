@@ -4,6 +4,7 @@ package br.com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,9 +30,10 @@ public data class RefundResponse(public val refund: Refund)
 
 @Serializable
 public data class RefundListResponse(
-  public val refunds: List<Refund>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("refunds")
+  public override var items: List<Refund>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<Refund>
 
 @Serializable
 public data class RefundRequestBody(

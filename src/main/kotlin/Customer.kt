@@ -4,6 +4,7 @@ package br.com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -35,9 +36,10 @@ public data class CustomerResponse(
 
 @Serializable
 public data class CustomerListResponse(
-  public val customers: List<Customer>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("customers")
+  public override var items: List<Customer>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<Customer>
 
 @Serializable
 public data class CustomerRequest @JvmOverloads public constructor(

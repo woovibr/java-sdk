@@ -43,6 +43,195 @@ public class WooviSDK @JvmOverloads public constructor(
   public val client: HttpClient = createDefaultHttpClient(appId, baseUrl, json),
 ) : CoroutineScope {
   /**
+   * Returns a charges' paginator with the given [start] and [end] dates.
+   *
+   * @param start The start date.
+   * @param end The end date.
+   * @param status The charge status.
+   * @param pageSize The page size.
+   */
+  @JvmOverloads
+  public fun charges(
+    start: String? = null,
+    end: String? = null,
+    status: ChargeStatus? = null,
+    pageSize: Int = 15,
+  ): Paginator<Charge> {
+    return Paginator.createPaginator<ChargeListResponse, _>(
+      sdk = this,
+      endpoint = "/api/v1/charge",
+      pageSize = pageSize,
+      initialQueries = mapOf("start" to start, "end" to end, "status" to status?.name),
+    )
+  }
+
+  /**
+   * Returns a pix qr codes' paginator with the given [start] and [end] dates.
+   *
+   * @param start The start date.
+   * @param end The end date.
+   * @param pageSize The page size.
+   */
+  @JvmOverloads
+  public fun pixQrCodes(
+    start: String? = null,
+    end: String? = null,
+    pageSize: Int = 15,
+  ): Paginator<PixQrCode> {
+    return Paginator.createPaginator<PixQrCodeList, _>(
+      sdk = this,
+      endpoint = "/api/v1/qrcode-static",
+      pageSize = pageSize,
+      initialQueries = mapOf("start" to start, "end" to end),
+    )
+  }
+
+  /**
+   * Returns a payments' paginator with the given [start] and [end] dates.
+   *
+   * @param start The start date.
+   * @param end The end date.
+   * @param pageSize The page size.
+   */
+  @JvmOverloads
+  public fun payments(
+    start: String? = null,
+    end: String? = null,
+    pageSize: Int = 15,
+  ): Paginator<PaymentResponseObject> {
+    return Paginator.createPaginator<PaymentListResponse, _>(
+      sdk = this,
+      endpoint = "/api/v1/payment",
+      pageSize = pageSize,
+      initialQueries = mapOf("start" to start, "end" to end),
+    )
+  }
+
+  /**
+   * Returns a refunds' paginator with the given [start] and [end] dates.
+   *
+   * @param start The start date.
+   * @param end The end date.
+   * @param pageSize The page size.
+   */
+  @JvmOverloads
+  public fun refunds(
+    start: String? = null,
+    end: String? = null,
+    pageSize: Int = 15,
+  ): Paginator<Refund> {
+    return Paginator.createPaginator<RefundListResponse, _>(
+      sdk = this,
+      endpoint = "/api/v1/refund",
+      pageSize = pageSize,
+      initialQueries = mapOf("start" to start, "end" to end),
+    )
+  }
+
+  /**
+   * Returns a customers' paginator with the given [start] and [end] dates.
+   *
+   * @param start The start date.
+   * @param end The end date.
+   * @param pageSize The page size.
+   */
+  @JvmOverloads
+  public fun customers(
+    start: String? = null,
+    end: String? = null,
+    pageSize: Int = 15,
+  ): Paginator<Customer> {
+    return Paginator.createPaginator<CustomerListResponse, _>(
+      sdk = this,
+      endpoint = "/api/v1/customer",
+      pageSize = pageSize,
+      initialQueries = mapOf("start" to start, "end" to end),
+    )
+  }
+
+  /**
+   * Returns a webhooks' paginator with the given [start] and [end] dates.
+   *
+   * @param start The start date.
+   * @param end The end date.
+   * @param url The webhook url.
+   * @param pageSize The page size.
+   */
+  @JvmOverloads
+  public fun webhooks(
+    start: String? = null,
+    end: String? = null,
+    url: String? = null,
+    pageSize: Int = 15,
+  ): Paginator<Webhook> {
+    return Paginator.createPaginator<WebhookListResponse, _>(
+      sdk = this,
+      endpoint = "/api/v1/webhook",
+      pageSize = pageSize,
+      initialQueries = mapOf("start" to start, "end" to end, "url" to url),
+    )
+  }
+
+  /**
+   * Returns a transactions' paginator with the given [start] and [end] dates.
+   *
+   * @param start Start date used in the query. Complies with RFC 3339.
+   * @param end End date used in the query. Complies with RFC 3339.
+   * @param charge You can use the charge ID or correlation ID or transaction ID of charge to get a list
+   *  of transactions related of this transaction
+   * @param pixQrCode You can use the QrCode static ID or correlation ID or identifier field of QrCode
+   *  static to get a list of QrCode related of this transaction
+   * @param withdrawal You can use the ID or EndToEndId of a withdrawal transaction to get all transactions
+   *  related to the withdrawal
+   * @return The transaction list response.
+   */
+  @JvmOverloads
+  @Suppress("LongParameterList")
+  public fun transactions(
+    /** Start date used in the query. Complies with RFC 3339. */
+    start: String? = null,
+
+    /** End date used in the query. Complies with RFC 3339. */
+    end: String? = null,
+
+    /**
+     * You can use the charge ID or correlation ID or transaction ID of charge to get a list of transactions
+     * related of this transaction
+     */
+    charge: String? = null,
+
+    /**
+     * You can use the QrCode static ID or correlation ID or identifier field of QrCode static to get a list
+     * of QrCode related of this transaction
+     */
+    pixQrCode: String? = null,
+
+    /**
+     *You can use the ID or EndToEndId of a withdrawal transaction to get all transactions related to the
+     * withdrawal
+     */
+    withdrawal: String? = null,
+
+    /**
+     * The page size.
+     */
+    pageSize: Int = 15,
+  ): Paginator<Transaction> {
+    return Paginator.createPaginator<TransactionListResponse, _>(
+      sdk = this,
+      endpoint = "/api/v1/transaction",
+      pageSize = pageSize,
+      initialQueries = mapOf(
+          "start" to start,
+          "end" to end,
+          "charge" to charge,
+          "pixQrCode" to pixQrCode,
+          "withdrawal" to withdrawal,
+      ),
+    )
+  }
+
+  /**
    * Returns a pix qr code.
    *
    * @param id The pix qr code id.
@@ -148,23 +337,6 @@ public class WooviSDK @JvmOverloads public constructor(
    */
   public fun getChargeAsync(id: String): Future<ChargeResponse> = future {
     getCharge(id)
-  }
-
-  /**
-   * Returns all charges.
-   *
-   * @param start The start date.
-   * @param end The end date.
-   * @param status The charge status.
-   * @return The charge list response.
-   */
-  @JvmOverloads
-  public fun chargesAsync(
-    start: String? = null,
-    end: String? = null,
-    status: ChargeStatus? = null,
-  ): Future<ChargeListResponse> = future {
-    charges(start, end, status)
   }
 
   /**
@@ -285,48 +457,6 @@ public class WooviSDK @JvmOverloads public constructor(
    */
   public fun getTransactionAsync(id: String): Future<TransactionResponse> = future {
     getTransaction(id)
-  }
-
-  /**
-   * Returns the transactions
-   *
-   * @param start Start date used in the query. Complies with RFC 3339.
-   * @param end End date used in the query. Complies with RFC 3339.
-   * @param charge You can use the charge ID or correlation ID or transaction ID of charge to get a list
-   *  of transactions related of this transaction
-   * @param pixQrCode You can use the QrCode static ID or correlation ID or identifier field of QrCode
-   *  static to get a list of QrCode related of this transaction
-   * @param withdrawal You can use the ID or EndToEndId of a withdrawal transaction to get all transactions
-   *  related to the withdrawal
-   * @return The transaction list response.
-   */
-  @JvmOverloads
-  public fun transactionsAsync(
-    /** Start date used in the query. Complies with RFC 3339. */
-    start: String? = null,
-
-    /** End date used in the query. Complies with RFC 3339. */
-    end: String? = null,
-
-    /**
-     * You can use the charge ID or correlation ID or transaction ID of charge to get a list of transactions
-     * related of this transaction
-     */
-    charge: String? = null,
-
-    /**
-     * You can use the QrCode static ID or correlation ID or identifier field of QrCode static to get a list
-     * of QrCode related of this transaction
-     */
-    pixQrCode: String? = null,
-
-    /**
-     *You can use the ID or EndToEndId of a withdrawal transaction to get all transactions related to the
-     * withdrawal
-     */
-    withdrawal: String? = null,
-  ): Future<TransactionListResponse> = future {
-    transactions(start, end, charge, pixQrCode, withdrawal)
   }
 
   /**

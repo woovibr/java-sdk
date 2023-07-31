@@ -44,9 +44,10 @@ public enum class TransactionKind {
 @Serializable
 public data class TransactionListResponse(
   public val status: String,
-  public val transactions: List<Transaction>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("transactions")
+  public override var items: List<Transaction>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<Transaction>
 
 @Serializable
 public data class TransactionResponse(public val transaction: Transaction)

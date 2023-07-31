@@ -11,6 +11,7 @@ import io.ktor.utils.io.*
 import java.io.File
 import java.util.function.Consumer
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
@@ -123,9 +124,10 @@ public data class ChargeResponse @JvmOverloads public constructor(
 
 @Serializable
 public data class ChargeListResponse(
-  public val charges: List<Charge>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("charges")
+  public override var items: List<Charge>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<Charge>
 
 @Serializable
 public data class ChargeDeleteResponse(
