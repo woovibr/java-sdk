@@ -222,11 +222,11 @@ public class WooviSDK @JvmOverloads public constructor(
       endpoint = "/api/v1/transaction",
       pageSize = pageSize,
       initialQueries = mapOf(
-          "start" to start,
-          "end" to end,
-          "charge" to charge,
-          "pixQrCode" to pixQrCode,
-          "withdrawal" to withdrawal,
+        "start" to start,
+        "end" to end,
+        "charge" to charge,
+        "pixQrCode" to pixQrCode,
+        "withdrawal" to withdrawal,
       ),
     )
   }
