@@ -51,9 +51,10 @@ public data class WebhookResponse(public val webhook: Webhook)
 
 @Serializable
 public data class WebhookListResponse(
-  public val webhooks: List<Webhook>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("webhooks")
+  public override var items: List<Webhook>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<Webhook>
 
 @Serializable
 public enum class WebhookEvent {

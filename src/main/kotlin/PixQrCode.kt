@@ -4,6 +4,7 @@ package br.com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -24,8 +25,10 @@ public data class PixQrCodeResponse(
 
 @Serializable
 public data class PixQrCodeList(
-  public val pixQrCodes: List<PixQrCode> = emptyList(),
-)
+  @SerialName("pixQrCodes")
+  public override var items: List<PixQrCode> = emptyList(),
+  public override var pageInfo: PageInfo,
+) : PageInstance<PixQrCode>
 
 @Serializable
 public data class PixQrCode(
