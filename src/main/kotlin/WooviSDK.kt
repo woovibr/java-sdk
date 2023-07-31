@@ -5,6 +5,7 @@ package br.com.openpix.sdk
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.engine.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -43,7 +44,7 @@ public class WooviSDK @JvmOverloads public constructor(
   private var json: Json = createJson(),
 
   /** The [HttpClient] instance of the SDK. */
-  public val client: HttpClient = createDefaultHttpClient(appId, baseUrl, json),
+  public val client: HttpClient = createDefaultHttpClient(CIO.create { }, appId, baseUrl, json),
 ) : CoroutineScope {
   /**
    * Returns a charges' paginator with the given [start] and [end] dates.
@@ -574,7 +575,7 @@ public class WooviSDK @JvmOverloads public constructor(
       json: Json = createJson(),
 
       /** The [HttpClient] instance of the SDK. */
-      client: HttpClient = createDefaultHttpClient(appId, baseUrl, json),
+      client: HttpClient = createDefaultHttpClient(CIO.create { }, appId, baseUrl, json),
     ): WooviSDK = WooviSDK(appId, baseUrl, executor.asCoroutineDispatcher(), json, client)
   }
 }
@@ -586,8 +587,13 @@ internal fun createJson(): Json = Json {
 }
 
 @JvmSynthetic
-internal fun createDefaultHttpClient(appId: String, baseUrl: String, json: Json): HttpClient {
-  return HttpClient(CIO) {
+internal fun createDefaultHttpClient(
+  engine: HttpClientEngine,
+  appId: String,
+  baseUrl: String,
+  json: Json
+): HttpClient {
+  return HttpClient(engine) {
     install(Logging) {
       level = LogLevel.HEADERS
     }
