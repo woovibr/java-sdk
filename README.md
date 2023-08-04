@@ -38,6 +38,21 @@ suspend fun main() {
 }
 ```
 
+## Consuming from GitHub Packages
+
+You can add the library to the project with the maven local, or with github packages, to get from github packages registry, you can
+use the following snippet:
+
+```groovy
+repositories {
+  maven("https://maven.pkg.github.com/Open-Pix/java-sdk")
+}
+
+dependencies {
+  implementation('br.com.openpix:sdk-java:0.0.1')
+}
+```
+
 ## Publishing to Maven Local
 
 Publishing to maven local, is a step to make the projects accessible from another projects. To make it you can execute
@@ -64,7 +79,7 @@ repositories {
 }
 
 dependencies {
-  implementation('br.com.openpix:sdk-java:1.0-SNAPSHOT')
+  implementation('br.com.openpix:sdk-java:0.0.1')
 }
 ```
 
