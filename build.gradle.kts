@@ -1,3 +1,5 @@
+import java.net.URI
+
 plugins {
   kotlin("jvm") version "1.8.21"
   kotlin("plugin.serialization") version "1.8.21"
@@ -8,7 +10,7 @@ plugins {
 }
 
 group = "br.com.openpix"
-version = "1.0-SNAPSHOT"
+version = "0.0.1"
 
 repositories {
   mavenCentral()
@@ -69,6 +71,16 @@ publishing {
     create<MavenPublication>("maven") {
       from(components["java"])
       artifact(sources.get())
+    }
+  }
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = URI.create("https://maven.pkg.github.com/octocat/hello-world")
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
     }
   }
 }
