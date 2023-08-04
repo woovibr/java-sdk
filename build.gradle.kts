@@ -76,7 +76,7 @@ publishing {
   repositories {
     maven {
       name = "GitHubPackages"
-      url = URI.create("https://maven.pkg.github.com/octocat/hello-world")
+      url = URI.create("https://maven.pkg.github.com/Open-Pix/java-sdk")
       credentials {
         username = System.getenv("GITHUB_ACTOR")
         password = System.getenv("GITHUB_TOKEN")
