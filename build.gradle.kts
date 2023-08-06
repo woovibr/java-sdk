@@ -26,7 +26,7 @@ dependencies {
 
   api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.2")
 
-testImplementation("io.ktor:ktor-client-mock:2.3.2")
+  testImplementation("io.ktor:ktor-client-mock:2.3.2")
   testImplementation("io.mockk:mockk:1.13.5")
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")

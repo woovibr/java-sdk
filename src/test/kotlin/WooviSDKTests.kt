@@ -1,14 +1,5 @@
 package br.com.openpix.sdk
 
-import io.ktor.client.*
-import io.ktor.client.engine.mock.*
-import io.ktor.http.*
-import io.ktor.utils.io.*
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 
 class WooviSDKTests {
@@ -19,5 +10,4 @@ class WooviSDKTests {
 
     assert(client.appId == appId)
   }
-
 }

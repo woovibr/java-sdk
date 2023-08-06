@@ -48,8 +48,8 @@ class PixQrCodeTests {
       paymentLinkUrl = "https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586",
       createdAt = "2021-03-02T17:28:51.882Z",
       updatedAt = "2021-03-02T17:28:51.882Z",
-      brCode = "000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao Paulo62360532867ba5173c734202ac659721306b38c963044BCA",
-      qrCodeImage = "https://api.openpix.com.br/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png",
+      brCode = "000201010212261060014br.gov.bcb...",
+      qrCodeImage = "https://api.openpix.com.br/openpi..",
     )
     val pixQrCodeResponse = PixQrCodeResponse(pixQrCode = pixQrCode)
 
