@@ -45,6 +45,7 @@ use the following snippet:
 
 ```groovy
 repositories {
+  // NOTE: Set your credentials
   maven("https://maven.pkg.github.com/Open-Pix/java-sdk")
 }
 
