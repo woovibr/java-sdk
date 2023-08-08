@@ -1,6 +1,6 @@
 # OpenPix/Woovi Java SDK
 
-Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi REST API, allowing you to easily integrate Woovi's video upload and management services into your Java applications.
+Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi REST API, allowing you to easily integrate payment services into your Java applications.
 
 ## Documentation
 
