@@ -2,54 +2,15 @@
 
 Welcome to the Woovi Java SDK! This SDK provides convenient access to the Woovi REST API, allowing you to easily integrate Woovi's video upload and management services into your Java applications.
 
-## Docs
+## Documentation
+
+See [SDK documentation](https://developers.openpix.com.br/docs/sdk/java/java-sdk-what-is) and [Rest API documentation](https://developers.openpix.com.br/api).
 
 How do I use it? You can have a look in the following example:
 
-```java,no
-import br.com.openpix.sdk.ApiClient;
-import br.com.openpix.sdk.ApiException;
-import br.com.openpix.sdk.Configuration;
-import br.com.openpix.sdk.api.AccountApi;
-import br.com.openpix.sdk.auth.ApiKeyAuth;
-import br.com.openpix.sdk.model.ApiV1AccountGet200Response;
+## Installation
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-defaultClient.setBasePath("https://api.woovi.com");
-
-// Configure API key authorization: AppID
-ApiKeyAuth AppID = (ApiKeyAuth) defaultClient.getAuthentication("AppID");
-AppID.setApiKey(System.getenv("APP_ID"));
-
-AccountApi apiInstance = new AccountApi(defaultClient);
-try {
-    ApiV1AccountGet200Response result = apiInstance.apiV1AccountGet();
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling AccountApi#apiV1AccountAccountIdGet");
-    System.err.println("Status code: " + e.getCode());
-    System.err.println("Reason: " + e.getResponseBody());
-    System.err.println("Response headers: " + e.getResponseHeaders());
-    e.printStackTrace();
-}
-```
-
-Or you can read the following documentation that references the api instances:
-
-- [Account](docs/AccountApi.md)
-- [Cashback Fidelity](docs/CashbackFidelityApi.md)
-- [Charge](docs/Charge.md)
-- [Charge Refund](docs/ChargeRefundApi.md)
-- [Customer](docs/CustomerApi.md)
-- [Partner Request Access](docs/PartnerRequestAccessApi.md)
-- [Payment Request Access](docs/PaymentRequestAccessApi.md)
-- [Pix QR Code](docs/PixQrCodeApi.md)
-- [Refund](docs/RefundApi.md)
-- [Subscription](docs/SubscriptionApi.md)
-- [Transaction](docs/TransactionsApi.md)
-- [Webhook](docs/WebhookApi.md)
-
-## Publishing to Maven Local
+### Publishing to Maven Local
 
 Publishing to maven local, is a step to make the projects accessible from another projects. To make it you can execute
 the following commands in the cli:
@@ -64,12 +25,12 @@ or if you are in a Windows environment, you can do the following
 .\gradlew.bat publishToMavenLocal
 ```
 
-## Adding to you project
+### Adding to you project
 
 You can use the locally published library for that, so follow the [tutorial](#publishing-to-maven-local), and add the following
 code snippet to you gradle buildscript:
-```groovy
 
+```groovy
 repositories {
   mavenLocal()
 }
@@ -77,54 +38,43 @@ repositories {
 dependencies {
   implementation('br.com.openpix:sdk-woovi-java:1.0.0')
 }
+```
 
+## Basic usage
+
+Here is the basic usage of the SDK. See [SDK documentation](https://developers.openpix.com.br/docs/sdk/java/java-sdk-usage) for more details.
+
+```java
+package br.com.openpix;
+
+import br.com.openpix.sdk.ChargeBuilder;
+import br.com.openpix.sdk.WooviSDK;
+
+import java.util.concurrent.ExecutionException;
+
+public class Main {
+    public static void main(String[] args) {
+        WooviSDK sdk = new WooviSDK("YOUR-API-ID-HERE");
+
+        try {
+            ChargeBuilder charge = new ChargeBuilder()
+                .value(100)
+                .correlationID("2d296a52-360d-11ee-be56-0242ac120002");
+
+            System.out.println(sdk.createChargeAsync(charge).get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
 ```
 
 ## Contributing
 
-We welcome contributions to the Woovi Java SDK! If you would like to contribute, please follow these steps:
+If you have suggestions for how OpenPix PHP SDK could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
-- Fork the repository
-- Create a new branch for your feature or bug fix
-- Write your code and tests
-- Commit your changes and push your branch to GitHub
-- Submit a pull request
-
-Please make sure to adhere to the [code of conduct](#code-of-conduct).
-
-## Code of Conduct
-
-Our Pledge
-We pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
-
-Our Standards
-Examples of behavior that contributes to creating a positive environment include:
-
-Using welcoming and inclusive language
-Being respectful of differing viewpoints and experiences
-Gracefully accepting constructive criticism
-Focusing on what is best for the community
-Showing empathy towards other community members
-Examples of unacceptable behavior by participants include:
-
-The use of sexualized language or imagery and unwelcome sexual attention or advances
-Trolling, insulting/derogatory comments, and personal or political attacks
-Public or private harassment
-Publishing others' private information, such as a physical or electronic address, without explicit permission
-Other conduct which could reasonably be considered inappropriate in a professional setting
-Our Responsibilities
-As project maintainers, we are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
-
-As contributors, you have the responsibility to adhere to these standards and report any instances of unacceptable behavior.
-
-Enforcement
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project team at <developers@woovi.com>. The project team will review and investigate all complaints and will respond in a way that it deems appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
-
-Project maintainers who do not follow or enforce the code of conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
-
-Attribution
-This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at http://contributor-covenant.org/version/1/4.
+For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-MIT License.
+OpenPix Java SDK is distributed under the terms of the [MIT license](LICENSE).
