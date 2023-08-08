@@ -187,7 +187,7 @@ public class ChargeBuilder internal constructor() {
    *
    * @param value The value of the charge in cents
    */
-  public fun value(value: Int) {
+  public fun value(value: Int): ChargeBuilder = apply {
     this.value = value
   }
 
@@ -196,7 +196,7 @@ public class ChargeBuilder internal constructor() {
    *
    * @param comment The comment of the charge
    */
-  public fun comment(comment: String) {
+  public fun comment(comment: String): ChargeBuilder = apply {
     this.comment = comment
   }
 
