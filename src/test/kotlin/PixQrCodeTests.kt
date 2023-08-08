@@ -6,8 +6,8 @@ import io.ktor.utils.io.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.assertj.core.api.Assertions.*;
 
 class PixQrCodeTests {
   @Test
