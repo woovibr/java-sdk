@@ -1,3 +1,5 @@
+@file:JvmName("Charges")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.call.*
@@ -7,11 +9,17 @@ import io.ktor.http.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import java.io.File
+import java.util.function.Consumer
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-public data class Charge(
-  public val customer: Customer? = null,
+public data class Charge @JvmOverloads public constructor(
+  public val customer: CustomerOrId? = null,
   public val value: Long,
   public val identifier: String,
   public val correlationID: String,
@@ -33,6 +41,67 @@ public data class Charge(
   public val globalID: String,
 )
 
+@Serializable(with = CustomerOrId.CustomerOrIdSerializer::class)
+public sealed class CustomerOrId {
+  public class Id(public val value: String) : CustomerOrId()
+  public class IsCustomer(public val value: Customer) : CustomerOrId()
+
+  public fun isId(): Boolean {
+    return this is Id
+  }
+
+  public fun isCustomer(): Boolean {
+    return this is Id
+  }
+
+  public fun unwrapId(): String {
+    return when (this) {
+      is Id -> value
+      is IsCustomer -> error("Expected Id, got Customer")
+    }
+  }
+
+  public fun unwrapCustomer(): Customer {
+    return when (this) {
+      is Id -> error("Expected Customer, got Id")
+      is IsCustomer -> value
+    }
+  }
+
+  public fun foldVoid(ifId: Consumer<String>, ifCustomer: Consumer<Customer>) {
+    return when (this) {
+      is Id -> ifId.accept(value)
+      is IsCustomer -> ifCustomer.accept(value)
+    }
+  }
+
+  public fun <T> fold(ifId: (String) -> T, ifCustomer: (Customer) -> T): T {
+    return when (this) {
+      is Id -> ifId(value)
+      is IsCustomer -> ifCustomer(value)
+    }
+  }
+
+  internal object CustomerOrIdSerializer : KSerializer<CustomerOrId> {
+    override val descriptor: SerialDescriptor = Customer.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): CustomerOrId {
+      return runCatching {
+        Id(decoder.decodeString())
+      }.getOrElse {
+        IsCustomer(decoder.decodeSerializableValue(Customer.serializer()))
+      }
+    }
+
+    override fun serialize(encoder: Encoder, value: CustomerOrId) {
+      when (value) {
+        is Id -> encoder.encodeString(value.value)
+        is IsCustomer -> encoder.encodeSerializableValue(Customer.serializer(), value.value)
+      }
+    }
+  }
+}
+
 @Serializable
 public enum class ChargeType {
   DYNAMIC,
@@ -47,7 +116,7 @@ public enum class ChargeStatus {
 }
 
 @Serializable
-public data class ChargeResponse(
+public data class ChargeResponse @JvmOverloads public constructor(
   public val correlationID: String? = null,
   public val brCode: String? = null,
   public val charge: Charge,
@@ -55,9 +124,10 @@ public data class ChargeResponse(
 
 @Serializable
 public data class ChargeListResponse(
-  public val charges: List<Charge>,
-  public val pageInfo: PageInfo,
-)
+  @SerialName("charges")
+  public override var items: List<Charge>,
+  public override var pageInfo: PageInfo,
+) : PageInstance<Charge>
 
 @Serializable
 public data class ChargeDeleteResponse(
@@ -66,7 +136,7 @@ public data class ChargeDeleteResponse(
 )
 
 @Serializable
-public data class ChargeRequestBody(
+public data class ChargeRequestBody @JvmOverloads public constructor(
   public val correlationID: String,
   public val value: Int,
   public val comment: String? = null,
@@ -103,6 +173,105 @@ public class ChargeBuilder internal constructor() {
   public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
 
+  /**
+   * The correlation ID is a unique identifier for each request. It is useful for tracking a request through the system.
+   *
+   * @param correlationID The correlation ID
+   */
+  public fun correlationID(correlationID: String): ChargeBuilder = apply {
+    this.correlationID = correlationID
+  }
+
+  /**
+   * The value of the charge in cents.
+   *
+   * @param value The value of the charge in cents
+   */
+  public fun value(value: Int): ChargeBuilder = apply {
+    this.value = value
+  }
+
+  /**
+   * The comment of the charge.
+   *
+   * @param comment The comment of the charge
+   */
+  public fun comment(comment: String): ChargeBuilder = apply {
+    this.comment = comment
+  }
+
+  /**
+   * The customer information.
+   *
+   * @param customer The customer information
+   */
+  public fun customer(customer: CustomerBuilder): ChargeBuilder = apply {
+    this.customer = customer.build()
+  }
+
+  /**
+   * The expiration date of the charge in days.
+   *
+   * @param expiresIn The expiration date of the charge in days
+   */
+  public fun expiresIn(expiresIn: Int): ChargeBuilder = apply {
+    this.expiresIn = expiresIn
+  }
+
+  /**
+   * The days for overdue.
+   *
+   * @param daysForOverdue The days for overdue
+   */
+  public fun daysForOverdue(daysForOverdue: Int): ChargeBuilder = apply {
+    this.daysForOverdue = daysForOverdue
+  }
+
+  /**
+   * The days after due date.
+   *
+   * @param daysAfterDueDate The days after due date
+   */
+  public fun daysAfterDueDate(daysAfterDueDate: Int): ChargeBuilder = apply {
+    this.daysAfterDueDate = daysAfterDueDate
+  }
+
+  /**
+   * The interests value in cents.
+   *
+   * @param interests The interests value in cents
+   */
+  public fun interests(interests: Int): ChargeBuilder = apply {
+    this.interests = Interests(interests)
+  }
+
+  /**
+   * The fines value in cents.
+   *
+   * @param fines The fines value in cents
+   */
+  public fun fines(fines: Int): ChargeBuilder = apply {
+    this.fines = Fines(fines)
+  }
+
+  /**
+   * The interests value in cents.
+   */
+  public fun additionalInfo(additionalInfo: List<AdditionalInfo>): ChargeBuilder = apply {
+    this.additionalInfo = additionalInfo
+  }
+
+  /**
+   * Adds an info.
+   *
+   * @param key The key of the additional info
+   * @param value The value of the additional info
+   */
+  public fun additionalInfo(key: String, value: String): ChargeBuilder = apply {
+    additionalInfo = additionalInfo + AdditionalInfo(key, value)
+  }
+
+  @JvmSynthetic
   internal fun build(): ChargeRequestBody {
     return ChargeRequestBody(
       correlationID,
@@ -119,14 +288,17 @@ public class ChargeBuilder internal constructor() {
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.deleteCharge(id: String): ChargeDeleteResponse {
   return client.delete("/api/v1/charge/$id").body<ChargeDeleteResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getCharge(id: String): ChargeResponse {
   return client.get("/api/v1/charge/$id").body<ChargeResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.charges(
   start: String? = null,
   end: String? = null,
@@ -144,9 +316,12 @@ public suspend fun WooviSDK.charges(
     .body<ChargeListResponse>()
 }
 
-public suspend fun WooviSDK.createCharge(builder: ChargeBuilder.() -> Unit): ChargeResponse {
+public suspend fun WooviSDK.createCharge(
+  value: ChargeBuilder = ChargeBuilder(),
+  builder: ChargeBuilder.() -> Unit,
+): ChargeResponse {
   return client
-    .post("/api/v1/charge") { setBody(ChargeBuilder().apply(builder).build()) }
+    .post("/api/v1/charge") { setBody(value.apply(builder).build()) }
     .body<ChargeResponse>()
 }
 

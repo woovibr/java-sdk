@@ -1,7 +1,10 @@
+@file:JvmName("PixQrCodes")
+
 package br.com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,8 +25,10 @@ public data class PixQrCodeResponse(
 
 @Serializable
 public data class PixQrCodeList(
-  public val pixQrCodes: List<PixQrCode> = emptyList(),
-)
+  @SerialName("pixQrCodes")
+  public override var items: List<PixQrCode> = emptyList(),
+  public override var pageInfo: PageInfo,
+) : PageInstance<PixQrCode>
 
 @Serializable
 public data class PixQrCode(
@@ -45,19 +50,68 @@ public class PixQrCodeBuilder internal constructor() {
   public var comment: String? by Properties.nullable()
   public var identifier: String by Properties.required()
 
+  /**
+   * The name of the pix qr code.
+   *
+   * @param name The name of the pix qr code.
+   */
+  public fun name(name: String): PixQrCodeBuilder = apply {
+    this.name = name
+  }
+
+  /**
+   * The correlation id of the pix qr code.
+   *
+   * @param correlationID The correlation id of the pix qr code.
+   */
+  public fun correlationID(correlationID: String): PixQrCodeBuilder = apply {
+    this.correlationID = correlationID
+  }
+
+  /**
+   * The value of the pix qr code.
+   *
+   * @param value The value of the pix qr code.
+   */
+  public fun value(value: Int): PixQrCodeBuilder = apply {
+    this.value = value
+  }
+
+  /**
+   * The comment of the pix qr code.
+   *
+   * @param comment The comment of the pix qr code.
+   */
+  public fun comment(comment: String): PixQrCodeBuilder = apply {
+    this.comment = comment
+  }
+
+  /**
+   * The identifier of the pix qr code.
+   *
+   * @param identifier The identifier of the pix qr code.
+   */
+  public fun identifier(identifier: String): PixQrCodeBuilder = apply {
+    this.identifier = identifier
+  }
+
+  @JvmSynthetic
   internal fun build(): PixQrCodeRequestBody {
     return PixQrCodeRequestBody(name, correlationID, value, comment, identifier)
   }
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.getPixQrCode(id: String): PixQrCodeResponse {
   return client.get("/api/v1/qrcode-static/$id").body<PixQrCodeResponse>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.allPixQrCodes(): PixQrCodeList {
   return client.get("/api/v1/qrcode-static").body<PixQrCodeList>()
 }
 
+@JvmSynthetic
 public suspend fun WooviSDK.createPixQrCode(
   value: PixQrCodeBuilder = PixQrCodeBuilder(),
   builder: PixQrCodeBuilder.() -> Unit,
