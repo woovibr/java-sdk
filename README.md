@@ -25,7 +25,7 @@ or if you are in a Windows environment, you can do the following
 .\gradlew.bat publishToMavenLocal
 ```
 
-### Adding to you project
+#### Adding to you project
 
 You can use the locally published library for that, so follow the [tutorial](#publishing-to-maven-local), and add the following
 code snippet to you gradle buildscript:
@@ -40,9 +40,27 @@ dependencies {
 }
 ```
 
+### Consuming from GitHub Packages
+
+You can add the library to the project with the maven local, or with github packages, to get from github packages registry, you can
+use the following snippet:
+
+```groovy
+repositories {
+  // NOTE: Set your credentials
+  maven("https://maven.pkg.github.com/Open-Pix/java-sdk")
+}
+
+dependencies {
+  implementation('br.com.openpix:sdk-java:0.0.1')
+}
+```
+
 ## Basic usage
 
 Here is the basic usage of the SDK. See [SDK documentation](https://developers.openpix.com.br/docs/sdk/java/java-sdk-usage) for more details.
+
+#### Java:
 
 ```java
 package br.com.openpix;
@@ -66,6 +84,18 @@ public class Main {
             throw new RuntimeException(e);
         }
     }
+}
+```
+
+#### Kotlin:
+
+```kotlin
+import br.com.openpix.sdk.WooviSDK
+import br.com.openpix.sdk.getSubscription
+
+suspend fun main() {
+  val sdk = WooviSDK(appId = "YOUR-API-ID-HERE")
+  println(sdk.getSubscription("id.."))
 }
 ```
 
