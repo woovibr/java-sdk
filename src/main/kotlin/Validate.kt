@@ -13,9 +13,9 @@ import java.security.spec.X509EncodedKeySpec
  *
  * @see verify
  */
-@Suppress("MaxLineLength")
+@Suppress("MaxLineLength", "ktlint")
 public const val PUBLIC_KEY: String =
-  "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FDLytOdElranpldnZxRCtJM01NdjNiTFhEdApwdnhCalk0QnNSclNkY2EzcnRBd01jUllZdnhTbmQ3amFnVkxwY3RNaU94UU84aWVVQ0tMU1dIcHNNQWpPL3paCldNS2Jxb0c4TU5waS91M2ZwNnp6MG1jSENPU3FZc1BVVUcxOWJ1VzhiaXM1WloySVpnQk9iV1NwVHZKMGNuajYKSEtCQUE4MkpsbitsR3dTMU13SURBUUFCCi0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo="
+  "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FDLytOdElranpldnZxRCtJM01NdjNiTFhEdApwdnhCalk0QnNSclNkY2EzcnRBd01jUllZdnhTbmQ3amFnVkxwY3RNaU94UU84aWVVQ0tMU1dIcHNNQWpPL3paCldNS2Jxb0c4TU5waS91M2ZwNnp6MG1jSENPU3FZc1BVVUcxOWJ1VzhiaXM1WloySVpnQk9iV1NwVHZKMGNuajYKSEtCQUE4MkpsbitsR3dTMU13SURBUUFCCi0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo=" // ktlint-disable
 
 /**
  * The certificate used to verify the signature of the webhook.
@@ -27,7 +27,7 @@ private val publicKey: PublicKey = run {
     .replace("-----BEGIN PUBLIC KEY-----", "")
     .replace("\\n", "")
     .replace("\n", "")
-    .replace("-----END PUBLIC KEY-----","")
+    .replace("-----END PUBLIC KEY-----", "")
     .decodeBase64Bytes()
 
   KeyFactory
