@@ -604,6 +604,7 @@ public class WooviSDK @JvmOverloads public constructor(
 internal fun createJson(): Json = Json {
   explicitNulls = true
   ignoreUnknownKeys = true
+  coerceInputValues = true
 }
 
 @JvmSynthetic
