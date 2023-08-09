@@ -33,7 +33,7 @@ public data class Charge @JvmOverloads public constructor(
   public val type: String? = null,
   public val createdAt: String,
   public val updatedAt: String,
-  public val brCode: String,
+  public val brCode: String? = null,
   public val expiresIn: Long,
   public val pixKey: String,
   public val paymentLinkUrl: String,
