@@ -7,10 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.jupiter.api.Test
+import org.assertj.core.api.Assertions.*;
 
 class PixQrCodeTests {
   @Test
-  fun `test woovi sdk get pix qr code async`() {
+  fun `test get pix qr code async`() {
     val engine = MockEngine {
       respond(
         content = ByteReadChannel(
@@ -18,16 +19,16 @@ class PixQrCodeTests {
           {
             "pixQrCode": {
               "value": 100,
-              "name": "some name",
+              "name": "dummy",
               "comment": "good",
               "correlationID": "9134e286-6f71-427a-bf00-241681624586",
               "identifier": "zr7833b4060c488a9b0f89811",
               "paymentLinkID": "7777a23s-6f71-427a-bf00-241681624586",
               "paymentLinkUrl": "https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586",
-              "qrCodeImage": "https://api.openpix.com.br/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png",
+              "qrCodeImage": "https://api.openpix.com.br/openpi...",
               "createdAt": "2021-03-02T17:28:51.882Z",
               "updatedAt": "2021-03-02T17:28:51.882Z",
-              "brCode": "000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao Paulo62360532867ba5173c734202ac659721306b38c963044BCA"
+              "brCode": "000201010212261060014br.gov.bcb..."
             }
           }
           """.trimIndent(),
@@ -41,7 +42,7 @@ class PixQrCodeTests {
 
     @Suppress("MaxLineLength")
     val pixQrCode = PixQrCode(
-      name = "some name",
+      name = "dummy",
       identifier = "zr7833b4060c488a9b0f89811",
       correlationID = "9134e286-6f71-427a-bf00-241681624586",
       paymentLinkID = "7777a23s-6f71-427a-bf00-241681624586",
@@ -49,16 +50,15 @@ class PixQrCodeTests {
       createdAt = "2021-03-02T17:28:51.882Z",
       updatedAt = "2021-03-02T17:28:51.882Z",
       brCode = "000201010212261060014br.gov.bcb...",
-      qrCodeImage = "https://api.openpix.com.br/openpi..",
+      qrCodeImage = "https://api.openpix.com.br/openpi...",
     )
-    val pixQrCodeResponse = PixQrCodeResponse(pixQrCode = pixQrCode)
 
     runBlocking {
       val response = withContext(Dispatchers.IO) {
         client.getPixQrCodeAsync("dummy").get()
       }
 
-      assert(response == pixQrCodeResponse)
+      assertThat(response).isEqualTo(PixQrCodeResponse(pixQrCode = pixQrCode))
     }
   }
 }
