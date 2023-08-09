@@ -413,6 +413,26 @@ public class WooviSDK @JvmOverloads public constructor(
   }
 
   /**
+   * Gets a subscription by its id.
+   *
+   * @param id The subscription id.
+   * @return The subscription response.
+   */
+  public fun getSubscriptionAsync(id: String): Future<SubscriptionResponseBody> = future {
+    getSubscription(id)
+  }
+
+  /**
+   * Creates subscription.
+   *
+   * @param builder The subscription builder.
+   * @return The subscription response.
+   */
+  public fun createSubscriptionAsync(builder: SubscriptionBuilder): Future<SubscriptionResponseBody> = future {
+    createSubscription(builder) {}
+  }
+
+  /**
    * Creates a new refund.
    *
    * @param value The refund builder.

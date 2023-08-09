@@ -84,8 +84,11 @@ public suspend fun WooviSDK.getSubscription(id: String): SubscriptionResponseBod
 }
 
 @JvmSynthetic
-public suspend fun WooviSDK.createSubscription(builder: SubscriptionBuilder.() -> Unit): SubscriptionResponseBody {
+public suspend fun WooviSDK.createSubscription(
+  value: SubscriptionBuilder = SubscriptionBuilder(),
+  builder: SubscriptionBuilder.() -> Unit
+): SubscriptionResponseBody {
   return client
-    .post("/api/v1/subscriptions") { setBody(SubscriptionBuilder().apply(builder).build()) }
+    .post("/api/v1/subscriptions") { setBody(value.apply(builder).build()) }
     .body<SubscriptionResponseBody>()
 }
