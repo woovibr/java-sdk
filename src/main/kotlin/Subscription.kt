@@ -16,7 +16,8 @@ public data class SubscriptionRequestBody @JvmOverloads public constructor(
 
 @Serializable
 public data class Subscription @JvmOverloads public constructor(
-  public val customer: CustomerRequest,
+  public val globalID: String? = null,
+  public val customer: Customer,
   public val value: Int,
   public val dayGenerateCharge: Int? = null,
 )
