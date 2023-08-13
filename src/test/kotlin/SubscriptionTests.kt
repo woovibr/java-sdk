@@ -2,12 +2,10 @@ package br.com.openpix.sdk
 
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
-import io.ktor.utils.io.*
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
