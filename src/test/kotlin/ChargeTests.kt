@@ -335,6 +335,7 @@ class ChargeTests {
         client.charges().pageInfo()
       }
 
+      @Suppress("MaxLineLength")
       assertThat(response).isEqualTo(
         listOf(
           Charge(
