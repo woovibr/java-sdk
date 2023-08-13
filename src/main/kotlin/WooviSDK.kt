@@ -370,7 +370,7 @@ public class WooviSDK @JvmOverloads public constructor(
    * @param id The customer id.
    * @return The customer response.
    */
-  public fun getCustomerAsync(id: String): Future<Customer> = future {
+  public fun getCustomerAsync(id: String): Future<CustomerResponse> = future {
     getCustomer(id)
   }
 
