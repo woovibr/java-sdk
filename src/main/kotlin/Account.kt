@@ -7,6 +7,9 @@ import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 
 @Serializable
+public data class AccountResponse(public val account: Account)
+
+@Serializable
 public data class Balance(
   /** Total amount in cents */
   public val total: Int,
@@ -72,8 +75,8 @@ public data class WithdrawTransaction(
 public data class AccountListResponse(public val accounts: List<Account>) : List<Account> by accounts
 
 @JvmSynthetic
-public suspend fun WooviSDK.getAccount(id: String): Account {
-  return client.get("/api/v1/account/{$id}").body<Account>()
+public suspend fun WooviSDK.getAccount(id: String): AccountResponse {
+  return client.get("/api/v1/account/{$id}").body<AccountResponse>()
 }
 
 @JvmSynthetic

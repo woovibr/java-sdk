@@ -270,7 +270,7 @@ public class WooviSDK @JvmOverloads public constructor(
    * @param id The account id.
    * @return The account response.
    */
-  public fun getAccountAsync(id: String): Future<Account> = future {
+  public fun getAccountAsync(id: String): Future<AccountResponse> = future {
     getAccount(id)
   }
 
