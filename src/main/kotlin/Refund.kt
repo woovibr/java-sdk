@@ -10,10 +10,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class Refund(
   public val value: Int,
-  public val status: RefundStatus,
+  public val status: RefundStatus? = null,
   public val correlationID: String,
   public val refundId: String,
-  public val time: String,
+  public val returnIdentification: String? = null,
+  public val time: String? = null,
   public val comment: String? = null,
 )
 
