@@ -21,21 +21,21 @@ import kotlinx.serialization.encoding.Encoder
 public data class Charge @JvmOverloads public constructor(
   public val customer: CustomerOrId? = null,
   public val value: Long,
-  public val identifier: String,
+  public val identifier: String? = null,
   public val correlationID: String,
   public val paymentLinkID: String,
-  public val transactionID: String,
+  public val transactionID: String? = null,
   public val status: String,
   public val additionalInfo: List<AdditionalInfo>,
-  public val discount: Long,
-  public val valueWithDiscount: Long,
+  public val discount: Long? = null,
+  public val valueWithDiscount: Long? = null,
   public val expiresDate: String,
   public val type: String? = null,
   public val createdAt: String,
   public val updatedAt: String,
   public val brCode: String? = null,
   public val expiresIn: Long,
-  public val pixKey: String,
+  public val pixKey: String? = null,
   public val paymentLinkUrl: String,
   public val qrCodeImage: String,
   public val globalID: String,
@@ -43,8 +43,8 @@ public data class Charge @JvmOverloads public constructor(
 
 @Serializable(with = CustomerOrId.CustomerOrIdSerializer::class)
 public sealed class CustomerOrId {
-  public class Id(public val value: String) : CustomerOrId()
-  public class IsCustomer(public val value: Customer) : CustomerOrId()
+  public data class Id(public val value: String) : CustomerOrId()
+  public data class IsCustomer(public val value: Customer) : CustomerOrId()
 
   public fun isId(): Boolean {
     return this is Id
