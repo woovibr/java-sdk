@@ -121,7 +121,7 @@ public class CustomerBuilder internal constructor() {
 
 @JvmSynthetic
 public suspend fun WooviSDK.getCustomer(id: String): CustomerResponse {
-  return client.get("/api/v1/customer/{$id}").body<CustomerResponse>()
+  return client.get("/api/v1/customer/$id").body<CustomerResponse>()
 }
 
 @JvmSynthetic
