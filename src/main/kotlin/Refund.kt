@@ -27,7 +27,7 @@ public enum class RefundStatus {
 }
 
 @Serializable
-public data class RefundResponse(public val refund: Refund)
+public data class RefundResponse(public val pixTransactionRefund: Refund)
 
 @Serializable
 public data class RefundListResponse(

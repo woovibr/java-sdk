@@ -49,7 +49,7 @@ class RefundTests {
         client.getRefund("dummy")
       }
 
-      assertThat(response).isEqualTo(RefundResponse(refund = refund))
+      assertThat(response).isEqualTo(RefundResponse(pixTransactionRefund = refund))
     }
   }
 
@@ -97,7 +97,7 @@ class RefundTests {
         }
       }
 
-      assertThat(response).isEqualTo(RefundResponse(refund = refund))
+      assertThat(response).isEqualTo(RefundResponse(pixTransactionRefund = refund))
     }
   }
 
