@@ -1,4 +1,4 @@
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

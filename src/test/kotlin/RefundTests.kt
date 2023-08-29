@@ -1,4 +1,4 @@
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*

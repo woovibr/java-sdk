@@ -1,7 +1,7 @@
 @file:JvmName("TaxIDs")
 @file:OptIn(ExperimentalSerializationApi::class)
 
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName

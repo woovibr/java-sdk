@@ -1,4 +1,4 @@
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

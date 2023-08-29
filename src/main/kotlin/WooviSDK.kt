@@ -1,7 +1,7 @@
 @file:OptIn(ExperimentalSerializationApi::class)
 @file:JvmName("WooviSDKs")
 
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import io.ktor.client.*
 import io.ktor.client.call.*
