@@ -1,4 +1,4 @@
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test

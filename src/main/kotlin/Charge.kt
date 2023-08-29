@@ -1,6 +1,6 @@
 @file:JvmName("Charges")
 
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*

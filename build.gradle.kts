@@ -7,10 +7,11 @@ plugins {
   id("io.gitlab.arturbosch.detekt") version "1.23.0"
   `maven-publish`
   publishing
+  signing
 }
 
-group = "br.com.openpix"
-version = "0.0.8"
+group = "com.openpix"
+version = "0.0.8-SNAPSHOT"
 
 repositories {
   mavenCentral()
@@ -90,4 +91,70 @@ publishing {
 
 tasks.test {
   useJUnitPlatform()
+}
+
+val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
+
+configure<PublishingExtension> {
+  publications {
+    create<MavenPublication>("OSSRH") {
+      groupId = project.group.toString()
+      artifactId = project.name
+      version = project.version.toString()
+      from(components["java"])
+
+      pom {
+        name.set(project.name)
+        description.set(project.description)
+        url.set("https://github.com/Open-Pix/java-sdk")
+        inceptionYear.set("2023")
+
+        licenses {
+          license {
+            name.set("MIT")
+            url.set("https://github.com/Open-Pix/java-sdk/blob/main/LICENSE")
+          }
+        }
+
+        developers {
+          developer {
+            name.set("Woovi Developers")
+            email.set("developers@woovi.com")
+            url.set("https://github.com/Open-Pix/java-sdk")
+          }
+        }
+
+        scm {
+          connection.set("scm:git:git:github.com/Open-Pix/java-sdk.git")
+          developerConnection.set("scm:git:https://github.com/Open-Pix/java-sdk.git")
+          url.set("https://github.com/Open-Pix/java-sdk")
+        }
+      }
+    }
+  }
+
+  repositories {
+    maven("OSSRH") {
+      name = "OSSRH"
+      url = if (isReleaseVersion) {
+        uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+      } else {
+        uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+      }
+
+      credentials {
+        username = project.findProperty("ossrhUsername")?.toString() ?: System.getenv("OSSRH_USERNAME")
+        password = project.findProperty("ossrhPassword")?.toString() ?: System.getenv("OSSRH_PASSWORD")
+      }
+    }
+  }
+}
+
+configure<SigningExtension> {
+  isRequired = isReleaseVersion
+  useInMemoryPgpKeys(
+    project.findProperty("signing.keyId")?.toString() ?: System.getenv("OSSRH_SIGNING_KEY"),
+    project.findProperty("signing.password")?.toString() ?: System.getenv("OSSRH_SIGNING_PASSWORD"),
+  )
+  sign(extensions.getByType(PublishingExtension::class.java).publications.getByName("OSSRH"))
 }

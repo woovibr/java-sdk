@@ -1,6 +1,6 @@
 @file:JvmName("OpenSSL")
 
-package br.com.openpix.sdk
+package com.openpix.sdk
 
 import io.ktor.util.*
 import java.security.KeyFactory

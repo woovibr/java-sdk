@@ -36,23 +36,22 @@ repositories {
 }
 
 dependencies {
-  implementation('br.com.openpix:sdk-woovi-java:1.0.0')
+    implementation('com.openpix:sdk-java:0.0.1')
 }
 ```
 
-### Consuming from GitHub Packages
+### Consuming from Sonatype
 
-You can add the library to the project with the maven local, or with github packages, to get from github packages registry, you can
+You can add the library to the project with the maven local, or with github packages, to get from Sonatype snapshot registry, you can
 use the following snippet:
 
 ```groovy
 repositories {
-  // NOTE: Set your credentials
-  maven("https://maven.pkg.github.com/Open-Pix/java-sdk")
+  maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
-  implementation('br.com.openpix:sdk-java:0.0.1')
+  implementation('com.openpix:sdk-java:0.0.1')
 }
 ```
 
@@ -63,10 +62,10 @@ Here is the basic usage of the SDK. See [SDK documentation](https://developers.o
 #### Java:
 
 ```java
-package br.com.openpix;
+package com.openpix;
 
-import br.com.openpix.sdk.ChargeBuilder;
-import br.com.openpix.sdk.WooviSDK;
+import com.openpix.sdk.ChargeBuilder;
+import com.openpix.sdk.WooviSDK;
 
 import java.util.concurrent.ExecutionException;
 
@@ -90,8 +89,8 @@ public class Main {
 #### Kotlin:
 
 ```kotlin
-import br.com.openpix.sdk.WooviSDK
-import br.com.openpix.sdk.getSubscription
+import com.openpix.sdk.WooviSDK
+import com.openpix.sdk.getSubscription
 
 suspend fun main() {
   val sdk = WooviSDK(appId = "YOUR-API-ID-HERE")
