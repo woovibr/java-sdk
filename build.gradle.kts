@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.openpix"
-version = "0.0.9"
+version = "0.0.10"
 
 repositories {
   mavenCentral()
@@ -154,7 +154,7 @@ configure<PublishingExtension> {
 configure<SigningExtension> {
   isRequired = isReleaseVersion
   useInMemoryPgpKeys(
-    project.findProperty("signing.keyId")?.toString() ?: System.getenv("OSSRH_SIGNING_KEY"),
+    project.findProperty("signing.keyId")?.toString() ?: System.getenv("OSSRH_SIGNING_KEY")?.replace("\\n", "\n"),
     project.findProperty("signing.password")?.toString() ?: System.getenv("OSSRH_SIGNING_PASSWORD"),
   )
   sign(extensions.getByType(PublishingExtension::class.java).publications.getByName("OSSRH"))
