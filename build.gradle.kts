@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.openpix"
-version = "0.0.8-SNAPSHOT"
+version = "0.0.8"
 
 repositories {
   mavenCentral()
@@ -63,6 +63,7 @@ kotlin {
     }
   }
 }
+
 val sources by tasks.registering(Jar::class) {
   archiveBaseName.set(project.name)
   archiveClassifier.set("sources")
