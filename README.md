@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation('com.openpix:sdk-java:0.0.1')
+    implementation('com.openpix:sdk-java:0.0.10')
 }
 ```
 
@@ -51,7 +51,7 @@ repositories {
 }
 
 dependencies {
-  implementation('com.openpix:sdk-java:0.0.1')
+  implementation('com.openpix:sdk-java:0.0.10')
 }
 ```
 
