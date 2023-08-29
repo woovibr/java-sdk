@@ -17,7 +17,7 @@ class RefundTests {
         content = ByteReadChannel(
           """
           {
-            "refund": {
+            "pixTransactionRefund": {
               "value": 100,
               "correlationID": "7777-6f71-427a-bf00-241681624586",
               "refundId": "11bf5b37e0b842e08dcfdc8c4aefc000",
@@ -60,7 +60,7 @@ class RefundTests {
         content = ByteReadChannel(
           """
           {
-            "refund": {
+            "pixTransactionRefund": {
               "value": 100,
               "correlationID": "7777-6f71-427a-bf00-241681624586",
               "refundId": "11bf5b37e0b842e08dcfdc8c4aefc000",
