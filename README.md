@@ -42,12 +42,12 @@ dependencies {
 
 ### Consuming from Sonatype
 
-You can add the library to the project with the maven local, or with github packages, to get from Sonatype snapshot registry, you can
+You can add the library to the project with the maven local, or with github packages, to get from Sonatype registry, you can
 use the following snippet:
 
 ```groovy
 repositories {
-  maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+  mavenCentral()
 }
 
 dependencies {
