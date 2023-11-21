@@ -48,10 +48,11 @@ use the following snippet:
 ```groovy
 repositories {
   mavenCentral()
+  maven('https://s01.oss.sonatype.org/content/repositories/snapshots/')
 }
 
 dependencies {
-  implementation('com.openpix:sdk-java:0.0.11')
+  implementation('com.openpix:sdk-java:0.0.8-SNAPSHOT')
 }
 ```
 
