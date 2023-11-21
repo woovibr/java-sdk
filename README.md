@@ -52,7 +52,7 @@ repositories {
 }
 
 dependencies {
-  implementation('com.openpix:sdk-java:0.0.8-SNAPSHOT')
+  implementation('com.openpix:sdk-java:0.0.13-SNAPSHOT')
 }
 ```
 
