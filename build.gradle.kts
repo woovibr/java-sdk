@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.openpix"
-version = "0.0.13-SNAPSHOT"
+version = "0.0.14"
 
 repositories {
   mavenCentral()
