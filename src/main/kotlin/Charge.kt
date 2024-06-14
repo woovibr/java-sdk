@@ -312,6 +312,11 @@ public class ChargeBuilder internal constructor() {
     this.expiresDate = expiresDate
   }
 
+  /**
+   * Discount settings of the charge
+   *
+   * @param discountSettings Discount settings of the charge
+   */
   public fun discountSettings(discountSettings: ChargeDiscountSettings): ChargeBuilder = apply {
     this.discountSettings = discountSettings
   }
