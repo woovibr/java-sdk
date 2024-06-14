@@ -116,6 +116,24 @@ public enum class ChargeStatus {
 }
 
 @Serializable
+public enum class ChargeDiscountModality {
+  FIXED_VALUE_UNTIL_SPECIFIED_DATE,
+  PERCENTAGE_UNTIL_SPECIFIED_DATE,
+}
+
+@Serializable
+public data class ChargeDiscountFixedDate(
+  public val daysActive: Int,
+  public val value: Int,
+)
+
+@Serializable
+public data class ChargeDiscountSettings(
+  public val discountModality: ChargeDiscountModality,
+  public val discountFixedDate: List<ChargeDiscountFixedDate>,
+)
+
+@Serializable
 public data class ChargeResponse @JvmOverloads public constructor(
   public val correlationID: String? = null,
   public val brCode: String? = null,
@@ -172,6 +190,9 @@ public class ChargeBuilder internal constructor() {
   public var interests: Interests? by Properties.nullable()
   public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
+  public var type: ChargeType? by Properties.nullable()
+  public var expiresDate: String? by Properties.nullable()
+  public var discountSettings: ChargeDiscountSettings? by Properties.nullable()
 
   /**
    * The correlation ID is a unique identifier for each request. It is useful for tracking a request through the system.
@@ -198,6 +219,15 @@ public class ChargeBuilder internal constructor() {
    */
   public fun comment(comment: String): ChargeBuilder = apply {
     this.comment = comment
+  }
+
+  /**
+   * The customer of the charge.
+   *
+   * @param customer The customer of the charge.
+   */
+  public fun customer(customer: CustomerRequest): ChargeBuilder = apply {
+    this.customer = customer
   }
 
   /**
@@ -255,13 +285,6 @@ public class ChargeBuilder internal constructor() {
   }
 
   /**
-   * The interests value in cents.
-   */
-  public fun additionalInfo(additionalInfo: List<AdditionalInfo>): ChargeBuilder = apply {
-    this.additionalInfo = additionalInfo
-  }
-
-  /**
    * Adds an info.
    *
    * @param key The key of the additional info
@@ -269,6 +292,33 @@ public class ChargeBuilder internal constructor() {
    */
   public fun additionalInfo(key: String, value: String): ChargeBuilder = apply {
     additionalInfo = additionalInfo + AdditionalInfo(key, value)
+  }
+
+  /**
+   * Type of the charge
+   *
+   * @param type Type of the charge
+   */
+  public fun type(type: ChargeType): ChargeBuilder = apply {
+    this.type = type
+  }
+
+  /**
+   * Expiration date of the charge
+   *
+   * @param expiresDate Expiration date of the charge
+   */
+  public fun expiresDate(expiresDate: String): ChargeBuilder = apply {
+    this.expiresDate = expiresDate
+  }
+
+  /**
+   * Discount settings of the charge
+   *
+   * @param discountSettings Discount settings of the charge
+   */
+  public fun discountSettings(discountSettings: ChargeDiscountSettings): ChargeBuilder = apply {
+    this.discountSettings = discountSettings
   }
 
   @JvmSynthetic
