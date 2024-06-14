@@ -147,50 +147,6 @@ public data class ChargeRequestBody @JvmOverloads public constructor(
   public val interests: Interests? = null,
   public val fines: Fines? = null,
   public val additionalInfos: List<AdditionalInfo>? = null,
-  public val type: ChargeType? = null,
-  public val expiresDate: Int? = null,
-  public val discountSettings: DiscountSettings? = null,
-  public val customer: Customer? = null,
-)
-
-@Serializable
-public data class Address @JvmOverloads public constructor(
-  public val zipcode: String? = null,
-  public val street: String? = null,
-  public val number: String? = null,
-  public val neighborhood: String? = null,
-  public val city: String? = null,
-  public val state: String? = null,
-  public val complement: String? = null,
-  public val country: String? = null,
-)
-
-@Serializable
-public data class Customer @JvmOverloads public constructor(
-  public val name: String? = null,
-  public val taxID: String? = null,
-  public val email: String? = null,
-  public val phone: String? = null,
-  public val correlationID: String? = null,
-  public val address: Address? = null,
-)
-
-@Serializable
-public data class DiscountFixedDate(
-  public val daysActive: Int,
-  public val value: Int,
-)
-
-@Serializable
-public enum class DiscountModality {
-  FIXED_VALUE_UNTIL_SPECIFIED_DATE,
-  PERCENTAGE_UNTIL_SPECIFIED_DATE,
-}
-
-@Serializable
-public data class DiscountSettings(
-  public val discountModality: DiscountModality,
-  public val discountFixedDate: List<DiscountFixedDate>,
 )
 
 @Serializable
@@ -216,11 +172,7 @@ public class ChargeBuilder internal constructor() {
   public var interests: Interests? by Properties.nullable()
   public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
-  public val type: ChargeType? by Properties.nullable(),
-  public val expiresDate: Int? by Properties.nullable(),
-  public val discountSettings: DiscountSettings? by Properties.nullable(),
-  public val customer: Customer? by Properties.nullable(),
-  
+
   /**
    * The correlation ID is a unique identifier for each request. It is useful for tracking a request through the system.
    *
@@ -319,38 +271,6 @@ public class ChargeBuilder internal constructor() {
     additionalInfo = additionalInfo + AdditionalInfo(key, value)
   }
 
-  /**
-   * Used to determine whether a charge will have a deadline, fines and interests
-   *
-   * @param type Type of the charge
-   */
-  public fun type(type: String): ChargeBuilder = apply {
-    this.type = ChargeType(type)
-  }
-
-  /**
-   * Expiration date of the charge
-   *
-   * @param expiresDate The days for overdue
-   */
-  public fun expiresDate(expiresDate: Int): ChargeBuilder = apply {
-    this.expiresDate = expiresDate
-  }
-
-  /**
-   * Discount settings for the charge. This property is only considered for charges of type OVERDUE
-   */
-  public fun discountSettings(modality: DiscountModality, discountFixedDate: List<DiscountFixedDate>): ChargeBuilder = apply {
-    this.discountSettings = DiscountSettings(modality, discountFixedDate)
-  }
-
-   /**
-   * Customer field is not required. However, if you decide to send it, you must send at least one of the following combinations, name + taxID or name + email or name + phone.
-   */
-  public fun customer(name: String, taxID?: String, email: String, phone: String, correlationID?: String, address?: Address): ChargeBuilder = apply {
-    this.customer = Customer(name, taxID, email, phone, correlationID, address
-  }
-
   @JvmSynthetic
   internal fun build(): ChargeRequestBody {
     return ChargeRequestBody(
@@ -364,10 +284,6 @@ public class ChargeBuilder internal constructor() {
       interests,
       fines,
       additionalInfo,
-      type,
-      expiresDate,
-      discountSettings,
-      customer,
     )
   }
 }
