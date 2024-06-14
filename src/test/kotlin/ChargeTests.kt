@@ -120,6 +120,7 @@ class ChargeTests {
       )
     }
   }
+
   @Test
   fun `test get charge`() {
     val engine = MockEngine {
@@ -229,7 +230,7 @@ class ChargeTests {
   }
 
   @Test
-  fun `test delete webhook`() {
+  fun `test delete charge`() {
     val engine = MockEngine {
       respond(
         content = ByteReadChannel(
