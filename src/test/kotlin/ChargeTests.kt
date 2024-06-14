@@ -52,6 +52,16 @@ class ChargeTests {
               ],
               "expiresIn": 2592000,
               "expiresDate": "2021-04-01T17:28:51.882Z",
+              "type": "DYNAMIC",
+              "discountSettings": {
+                "discountModality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+                "discountFixedDate": [
+                  {
+                    "daysActive": 10,
+                    "value": 1000
+                  }
+                ]
+              },
               "createdAt": "2021-03-02T17:28:51.882Z",
               "updatedAt": "2021-03-02T17:28:51.882Z"
             }
@@ -71,6 +81,12 @@ class ChargeTests {
         client.createCharge {
           correlationID = "..."
           value = 100
+          type = ChargeType.DYNAMIC
+          expiresDate = 1617280131
+          discountSettings = DiscountSettings(
+            discountModality = DiscountModality.FIXED_VALUE_UNTIL_SPECIFIED_DATE,
+            discountFixedDate = listOf(DiscountFixedDate(10, 1000))
+          )
         }
       }
 
@@ -110,6 +126,7 @@ class ChargeTests {
             ),
             expiresIn = 2592000,
             expiresDate = "2021-04-01T17:28:51.882Z",
+            type = "DYNAMIC",
             createdAt = "2021-03-02T17:28:51.882Z",
             updatedAt = "2021-03-02T17:28:51.882Z",
             globalID = "Q2hhcmdlOjcxOTFmMWIwMjA0NmJmNWY1M2RjZmEwYg==",
@@ -120,6 +137,7 @@ class ChargeTests {
       )
     }
   }
+
   @Test
   fun `test get charge`() {
     val engine = MockEngine {
@@ -162,6 +180,16 @@ class ChargeTests {
               ],
               "expiresIn": 2592000,
               "expiresDate": "2021-04-01T17:28:51.882Z",
+              "type": "DYNAMIC",
+              "discountSettings": {
+                "discountModality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+                "discountFixedDate": [
+                  {
+                    "daysActive": 10,
+                    "value": 1000
+                  }
+                ]
+              },
               "createdAt": "2021-03-02T17:28:51.882Z",
               "updatedAt": "2021-03-02T17:28:51.882Z"
             }
@@ -217,6 +245,7 @@ class ChargeTests {
             ),
             expiresIn = 2592000,
             expiresDate = "2021-04-01T17:28:51.882Z",
+            type = "DYNAMIC",
             createdAt = "2021-03-02T17:28:51.882Z",
             updatedAt = "2021-03-02T17:28:51.882Z",
             globalID = "Q2hhcmdlOjcxOTFmMWIwMjA0NmJmNWY1M2RjZmEwYg==",
@@ -304,6 +333,16 @@ class ChargeTests {
               ],
               "expiresIn": 2592000,
               "expiresDate": "2021-04-01T17:28:51.882Z",
+              "type": "DYNAMIC",
+              "discountSettings": {
+                "discountModality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+                "discountFixedDate": [
+                  {
+                    "daysActive": 10,
+                    "value": 1000
+                  }
+                ]
+              },
               "createdAt": "2021-03-02T17:28:51.882Z",
               "updatedAt": "2021-03-02T17:28:51.882Z"
             }],
@@ -371,6 +410,7 @@ class ChargeTests {
             ),
             expiresIn = 2592000,
             expiresDate = "2021-04-01T17:28:51.882Z",
+            type = "DYNAMIC",
             createdAt = "2021-03-02T17:28:51.882Z",
             updatedAt = "2021-03-02T17:28:51.882Z",
             globalID = "Q2hhcmdlOjcxOTFmMWIwMjA0NmJmNWY1M2RjZmEwYg==",

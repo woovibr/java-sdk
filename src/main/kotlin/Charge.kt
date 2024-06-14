@@ -150,29 +150,6 @@ public data class ChargeRequestBody @JvmOverloads public constructor(
   public val type: ChargeType? = null,
   public val expiresDate: Int? = null,
   public val discountSettings: DiscountSettings? = null,
-  public val customer: Customer? = null,
-)
-
-@Serializable
-public data class Address @JvmOverloads public constructor(
-  public val zipcode: String? = null,
-  public val street: String? = null,
-  public val number: String? = null,
-  public val neighborhood: String? = null,
-  public val city: String? = null,
-  public val state: String? = null,
-  public val complement: String? = null,
-  public val country: String? = null,
-)
-
-@Serializable
-public data class Customer @JvmOverloads public constructor(
-  public val name: String? = null,
-  public val taxID: String? = null,
-  public val email: String? = null,
-  public val phone: String? = null,
-  public val correlationID: String? = null,
-  public val address: Address? = null,
 )
 
 @Serializable
@@ -216,10 +193,9 @@ public class ChargeBuilder internal constructor() {
   public var interests: Interests? by Properties.nullable()
   public var fines: Fines? by Properties.nullable()
   public var additionalInfo: List<AdditionalInfo> = emptyList()
-  public val type: ChargeType? by Properties.nullable(),
-  public val expiresDate: Int? by Properties.nullable(),
-  public val discountSettings: DiscountSettings? by Properties.nullable(),
-  public val customer: Customer? by Properties.nullable(),
+  public var type: ChargeType? by Properties.nullable()
+  public var expiresDate: Int? by Properties.nullable()
+  public var discountSettings: DiscountSettings? by Properties.nullable()
   
   /**
    * The correlation ID is a unique identifier for each request. It is useful for tracking a request through the system.
@@ -325,7 +301,7 @@ public class ChargeBuilder internal constructor() {
    * @param type Type of the charge
    */
   public fun type(type: String): ChargeBuilder = apply {
-    this.type = ChargeType(type)
+    this.type = ChargeType.valueOf(type)
   }
 
   /**
@@ -347,8 +323,8 @@ public class ChargeBuilder internal constructor() {
    /**
    * Customer field is not required. However, if you decide to send it, you must send at least one of the following combinations, name + taxID or name + email or name + phone.
    */
-  public fun customer(name: String, taxID?: String, email: String, phone: String, correlationID?: String, address?: Address): ChargeBuilder = apply {
-    this.customer = Customer(name, taxID, email, phone, correlationID, address
+  public fun customer(builder: CustomerBuilder.() -> Unit): ChargeBuilder = apply {
+    this.customer = CustomerBuilder().apply(builder).build()
   }
 
   @JvmSynthetic
@@ -366,8 +342,7 @@ public class ChargeBuilder internal constructor() {
       additionalInfo,
       type,
       expiresDate,
-      discountSettings,
-      customer,
+      discountSettings
     )
   }
 }
