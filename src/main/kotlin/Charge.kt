@@ -165,6 +165,9 @@ public data class ChargeRequestBody @JvmOverloads public constructor(
   public val interests: Interests? = null,
   public val fines: Fines? = null,
   public val additionalInfos: List<AdditionalInfo>? = null,
+  public val type: ChargeType? = null,
+  public val expiresDate: String? = null,
+  public val discountSettings: ChargeDiscountSettings? = null,
 )
 
 @Serializable
@@ -334,6 +337,9 @@ public class ChargeBuilder internal constructor() {
       interests,
       fines,
       additionalInfo,
+      type,
+      expiresDate,
+      discountSettings,
     )
   }
 }
