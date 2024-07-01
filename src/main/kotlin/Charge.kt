@@ -129,7 +129,7 @@ public data class ChargeDiscountFixedDate(
 
 @Serializable
 public data class ChargeDiscountSettings(
-  public val discountModality: ChargeDiscountModality,
+  public val modality: ChargeDiscountModality,
   public val discountFixedDate: List<ChargeDiscountFixedDate>,
 )
 
