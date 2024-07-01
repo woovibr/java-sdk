@@ -84,7 +84,7 @@ class ChargeTests {
           type = ChargeType.DYNAMIC
           expiresDate = "2021-04-01"
           discountSettings = ChargeDiscountSettings(
-            discountModality = ChargeDiscountModality.FIXED_VALUE_UNTIL_SPECIFIED_DATE,
+            modality = ChargeDiscountModality.FIXED_VALUE_UNTIL_SPECIFIED_DATE,
             discountFixedDate = listOf(ChargeDiscountFixedDate(10, 1000))
           )
         }
