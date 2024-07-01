@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class WebhookPayload(
-  public val name: Int?,
+  public val name: String?,
   public val url: String?,
   public val authorization: String?,
   public val isActive: Boolean?,
@@ -109,7 +109,6 @@ public enum class WebhookEvent {
 
 public class WebhookBuilder internal constructor() {
   public var name: String? by Properties.nullable()
-  public var number: Int? by Properties.nullable()
   public var url: String? by Properties.nullable()
   public var authorization: String? by Properties.nullable()
   public var isActive: Boolean? by Properties.nullable()
@@ -122,15 +121,6 @@ public class WebhookBuilder internal constructor() {
    */
   public fun name(name: String): WebhookBuilder = apply {
     this.name = name
-  }
-
-  /**
-   * The number of the webhook.
-   *
-   * @param number The number of the webhook.
-   */
-  public fun number(number: Int): WebhookBuilder = apply {
-    this.number = number
   }
 
   /**
@@ -254,7 +244,7 @@ public class WebhookBuilder internal constructor() {
   internal fun build(): WebhookRequest {
     return WebhookRequest(
       webhook = WebhookPayload(
-        name = number,
+        name = name,
         url = url,
         authorization = authorization,
         isActive = isActive,
