@@ -108,11 +108,21 @@ public enum class WebhookEvent {
 }
 
 public class WebhookBuilder internal constructor() {
+  public var name: String? by Properties.nullable()
   public var number: Int? by Properties.nullable()
   public var url: String? by Properties.nullable()
   public var authorization: String? by Properties.nullable()
   public var isActive: Boolean? by Properties.nullable()
   public var event: WebhookEvent? by Properties.nullable()
+
+  /**
+   * The name of the webhook.
+   *
+   * @param name The name of the webhook.
+   */
+  public fun name(name: String): WebhookBuilder = apply {
+    this.name = name
+  }
 
   /**
    * The number of the webhook.
