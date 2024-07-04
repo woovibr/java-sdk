@@ -161,6 +161,7 @@ public data class ChargeRequestBody @JvmOverloads public constructor(
   public val customer: CustomerRequest? = null,
   public val expiresIn: Int? = null,
   public val daysForOverdue: Int? = null,
+  public val daysForDueDate: Int? = null,
   public val daysAfterDueDate: Int? = null,
   public val interests: Interests? = null,
   public val fines: Fines? = null,
@@ -189,6 +190,7 @@ public class ChargeBuilder internal constructor() {
   public var customer: CustomerRequest? by Properties.nullable()
   public var expiresIn: Int? by Properties.nullable()
   public var daysForOverdue: Int? by Properties.nullable()
+  public var daysForDueDate: Int? by Properties.nullable()
   public var daysAfterDueDate: Int? by Properties.nullable()
   public var interests: Interests? by Properties.nullable()
   public var fines: Fines? by Properties.nullable()
@@ -258,6 +260,15 @@ public class ChargeBuilder internal constructor() {
    */
   public fun daysForOverdue(daysForOverdue: Int): ChargeBuilder = apply {
     this.daysForOverdue = daysForOverdue
+  }
+
+  /**
+   * The days for due date.
+   *
+   * @param daysForDueDate The days for due date
+   */
+  public fun daysForDueDate(daysForDueDate: Int): ChargeBuilder = apply {
+    this.daysForDueDate = daysForDueDate
   }
 
   /**
@@ -333,6 +344,7 @@ public class ChargeBuilder internal constructor() {
       customer,
       expiresIn,
       daysForOverdue,
+      daysForDueDate,
       daysAfterDueDate,
       interests,
       fines,
