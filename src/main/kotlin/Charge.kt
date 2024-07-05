@@ -16,6 +16,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonDecoder
+import kotlinx.serialization.json.JsonEncoder
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 
 @Serializable
 public data class Charge @JvmOverloads public constructor(
@@ -51,7 +55,7 @@ public sealed class CustomerOrId {
   }
 
   public fun isCustomer(): Boolean {
-    return this is Id
+    return this is IsCustomer
   }
 
   public fun unwrapId(): String {
@@ -86,17 +90,19 @@ public sealed class CustomerOrId {
     override val descriptor: SerialDescriptor = Customer.serializer().descriptor
 
     override fun deserialize(decoder: Decoder): CustomerOrId {
-      return runCatching {
-        Id(decoder.decodeString())
-      }.getOrElse {
-        IsCustomer(decoder.decodeSerializableValue(Customer.serializer()))
+      val jsonDecoder = decoder as? JsonDecoder ?: error("Expected JsonDecoder")
+      return when (val input = jsonDecoder.decodeJsonElement()) {
+        is JsonPrimitive -> Id(input.content)
+        is JsonObject -> IsCustomer(jsonDecoder.json.decodeFromJsonElement(Customer.serializer(), input))
+        else -> error("Unexpected JSON type: $input")
       }
     }
 
     override fun serialize(encoder: Encoder, value: CustomerOrId) {
+      val jsonEncoder = encoder as? JsonEncoder ?: error("Expected JsonEncoder")
       when (value) {
-        is Id -> encoder.encodeString(value.value)
-        is IsCustomer -> encoder.encodeSerializableValue(Customer.serializer(), value.value)
+        is Id -> jsonEncoder.encodeJsonElement(JsonPrimitive(value.value))
+        is IsCustomer -> jsonEncoder.encodeSerializableValue(Customer.serializer(), value.value)
       }
     }
   }
