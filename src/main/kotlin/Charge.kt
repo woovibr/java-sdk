@@ -171,7 +171,7 @@ public data class ChargeRequestBody @JvmOverloads public constructor(
   public val daysAfterDueDate: Int? = null,
   public val interests: Interests? = null,
   public val fines: Fines? = null,
-  public val additionalInfos: List<AdditionalInfo>? = null,
+  public val additionalInfo: List<AdditionalInfo>? = null,
   public val type: ChargeType? = null,
   public val expiresDate: String? = null,
   public val discountSettings: ChargeDiscountSettings? = null,
